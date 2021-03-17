@@ -1,0 +1,2 @@
+# subsidiosConfenalco
+Proyecto Ing Soft
