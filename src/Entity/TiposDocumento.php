@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="TIPOS_DOCUMENTO")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\TiposDocumentoRepository")
  */
 class TiposDocumento
 {

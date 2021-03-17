@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="ANEXOS", indexes={@ORM\Index(name="fkIdx_165", columns={"ID_SUBSIDIOS"}), @ORM\Index(name="fkIdx_177", columns={"ID_PROG_REQ"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AnexosRepository")
  */
 class Anexos
 {

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="NOTI_SOLI", indexes={@ORM\Index(name="fkIdx_83", columns={"ID_NOTIFICACION"}), @ORM\Index(name="fkIdx_141", columns={"ID_SUBSIDIOS"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\NotiSoliRepository")
  */
 class NotiSoli
 {
