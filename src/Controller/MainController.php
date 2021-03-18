@@ -22,8 +22,8 @@ class MainController extends AbstractController{
                 'succsees' => true,
                 'data' => [
                     [
-                        'dato' => 1,
-                        'datoDos' => 'msjDos'
+                        'id_api' => 1,
+                        'response' => 'Api subsidios comfenalco'
                     ],
                     
                 ]
