@@ -10,12 +10,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController{
 
+
+
+
+
+
+
+        
+  
+
         /**
-         * @Route("/holloWord", name="hello")
+         * @Route("/helloWorld", name="hello")
          * 
          */
         
-        public function holloWord( Request $request, LoggerInterface $logger){
+        public function helloWorld( Request $request, LoggerInterface $logger){
 
             $response = new JsonResponse();
             $response->setData([
