@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subsidios index{% endblock %}
+
+{% block body %}
+    <h1>Subsidios index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdSubsidios</th>
+                <th>IdEstado</th>
+                <th>IdUsuario</th>
+                <th>IdPrograma</th>
+                <th>FechaCreacion</th>
+                <th>FechaModificacion</th>
+                <th>FechaFinalizacion</th>
+                <th>Formulario</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subsidio in subsidios %}
+            <tr>
+                <td>{{ subsidio.idSubsidios }}</td>
+                <td>{{ subsidio.idEstado }}</td>
+                <td>{{ subsidio.idUsuario }}</td>
+                <td>{{ subsidio.idPrograma }}</td>
+                <td>{{ subsidio.fechaCreacion ? subsidio.fechaCreacion|date('Y-m-d') : '' }}</td>
+                <td>{{ subsidio.fechaModificacion ? subsidio.fechaModificacion|date('Y-m-d') : '' }}</td>
+                <td>{{ subsidio.fechaFinalizacion ? subsidio.fechaFinalizacion|date('Y-m-d') : '' }}</td>
+                <td>{{ subsidio.formulario }}</td>
+                <td>
+                    <a href="{{ path('subsidios_show', {'idSubsidios': subsidio.idSubsidios}) }}">show</a>
+                    <a href="{{ path('subsidios_edit', {'idSubsidios': subsidio.idSubsidios}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('subsidios_new') }}">Create new</a>
+{% endblock %}

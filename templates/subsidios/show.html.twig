@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subsidios{% endblock %}
+
+{% block body %}
+    <h1>Subsidios</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdSubsidios</th>
+                <td>{{ subsidio.idSubsidios }}</td>
+            </tr>
+            <tr>
+                <th>IdEstado</th>
+                <td>{{ subsidio.idEstado }}</td>
+            </tr>
+            <tr>
+                <th>IdUsuario</th>
+                <td>{{ subsidio.idUsuario }}</td>
+            </tr>
+            <tr>
+                <th>IdPrograma</th>
+                <td>{{ subsidio.idPrograma }}</td>
+            </tr>
+            <tr>
+                <th>FechaCreacion</th>
+                <td>{{ subsidio.fechaCreacion ? subsidio.fechaCreacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaModificacion</th>
+                <td>{{ subsidio.fechaModificacion ? subsidio.fechaModificacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaFinalizacion</th>
+                <td>{{ subsidio.fechaFinalizacion ? subsidio.fechaFinalizacion|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Formulario</th>
+                <td>{{ subsidio.formulario }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('subsidios_index') }}">back to list</a>
+
+    <a href="{{ path('subsidios_edit', {'idSubsidios': subsidio.idSubsidios}) }}">edit</a>
+
+    {{ include('subsidios/_delete_form.html.twig') }}
+{% endblock %}

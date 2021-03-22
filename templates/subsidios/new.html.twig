@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Subsidios{% endblock %}
+
+{% block body %}
+    <h1>Create new Subsidios</h1>
+
+    {{ include('subsidios/_form.html.twig') }}
+
+    <a href="{{ path('subsidios_index') }}">back to list</a>
+{% endblock %}

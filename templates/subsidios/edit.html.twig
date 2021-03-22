@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Subsidios{% endblock %}
+
+{% block body %}
+    <h1>Edit Subsidios</h1>
+
+    {{ include('subsidios/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('subsidios_index') }}">back to list</a>
+
+    {{ include('subsidios/_delete_form.html.twig') }}
+{% endblock %}
