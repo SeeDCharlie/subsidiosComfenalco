@@ -61,25 +61,5 @@ class MainController extends AbstractController
     }
 
 
-    /**
-     * @Route("/helloWorld", name="hello")
-     * 
-     */
-
-    public function helloWorld(Request $request, LoggerInterface $logger)
-    {
-
-        $response = new JsonResponse();
-        $response->setData([
-            'succsees' => true,
-            'data' => [
-                [
-                    'id_api' => 1,
-                    'response' => 'Api subsidios comfenalco'
-                ],
-
-            ]
-        ]);
-        return $response;
-    }
+   
 }
