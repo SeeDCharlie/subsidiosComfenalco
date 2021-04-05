@@ -6,3 +6,6 @@ curl -X POST -H "Content-Type: application/json" -d ' {"nombre": "carlos" ,"apel
 
 curl
 http://127.0.0.1:8000/HelloWorld
+
+
+curl -X POST -H "Content-Type: application/json" -d ' {"nombre": "carlos" ,"apellido": "asda","fechaNacimiento" : "1998-02-16","idGnr" : 2,"numeroDocumento" : 6516516,"email" : "correo@correo.com","idCiudad" : 1,"idPais" : 1,"idTipoDoc" : 1,"password": "password","idTipoUsr": 1}' https://comfenalcosubsidios.seedcharlie.co/UserRegistration

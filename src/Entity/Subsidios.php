@@ -67,7 +67,7 @@ class Subsidios
     /**
      * @var string
      *
-     * @ORM\Column(name="FORMULARIO", type="string", length=100, nullable=false)
+     * @ORM\Column(name="FORMULARIO", type="string", length=100, nullable=true)
      */
     private $formulario;
 
