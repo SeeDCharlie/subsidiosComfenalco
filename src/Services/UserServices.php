@@ -42,28 +42,12 @@ class UserServices
         }
     }
 
-
     public function userUpdate(){
 
     }
 
     public function userDelete(){
 
-    }
-
-    public function getAllUser(UsuariosRepository $ur){
-        $response = new JsonResponse();
-
-        try {
-
-
-            $response->setData(['success' => true, 'usuarios' => ""]);
-            return $response;
-            
-        } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
-            return $response;
-        }
     }
 
     public function getUserById(){
