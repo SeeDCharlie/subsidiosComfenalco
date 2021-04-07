@@ -39,7 +39,8 @@ class SubsidiosController extends AbstractController
      
      
     public function regisSubsidio(Request $request, EntityManagerInterface $em) {
-        $response = new JsonResponse();
+        /*
+            $response = new JsonResponse();
         $soliSubsidio = new Subsidios();
         if ($request->getMethod() == 'POST') {
             try {
@@ -68,6 +69,9 @@ class SubsidiosController extends AbstractController
             $response->setData(['success' => false, 'msj' => "Method GET don't response"]);
             return $response;
         }
+
+        */
+
     }
 
     /**
