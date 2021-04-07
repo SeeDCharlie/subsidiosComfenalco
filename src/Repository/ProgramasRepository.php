@@ -19,6 +19,25 @@ class ProgramasRepository extends ServiceEntityRepository
         parent::__construct($registry, Programas::class);
     }
 
+    public function getProgramasSQL(): array{
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // $sql = 'select pro.PROGRAMA, pro.INFO_PROGRAMA,re.REQUERIMIENTO ,re.INFO_REQUERIMIENTO from PROGRAMAS pro
+        // inner join PROGRAMA_REQUERIMIENTOS proRe on (pro.ID_PROGRAMA = proRe.ID_PROGRAMA)
+        // inner join REQUERIMIENTOS re on (proRe.ID_REQUERIMIENTOS = re.ID_REQUERIMIENTOS)';
+
+        $sql = 'select pro.PROGRAMA, pro.INFO_PROGRAMA from PROGRAMAS pro';
+
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;
+    }
 
     // /**
     //  * @return Programas[] Returns an array of Programas objects
