@@ -21,8 +21,6 @@ class SubsidiosController extends AbstractController
      * @Route("/subsidios",name="subsidios")
      */
     
-<<<<<<< HEAD
-     
      
     public function regisSubsidio(Request $request, EntityManagerInterface $em) {
         /*
@@ -59,22 +57,8 @@ class SubsidiosController extends AbstractController
         */
 
     }
-=======
-    // public function consultarSubsidios(Request $request, SubsidiosRepository $subsidiosRepository): JsonResponse{
 
-    //     $subsidios = $subsidiosRepository->findAll();
-    //     $subsidiosArray = [];
->>>>>>> 84bb7efd2674953270a6c38cb600f01ba3574af4
 
-    //     foreach ($subsidios as $subsidio) {                        
-    //         $subsidiosArray [] = [
-    //             'IdSubsidios' => $subsidio->getIdSubsidios(),
-    //             'IdEstado' => $subsidio->getIdEstado(),
-    //             'IdUsuario' = $subsidio->getId
-    //         ]
-    //     }
-
-    // }
 
 
 }
