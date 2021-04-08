@@ -5,6 +5,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apell
 // devuelve todos los usuarios registrados
 curl http://127.0.0.1:8000/getAllUsers
 
+// devuelve todos los programas
+curl http://127.0.0.1:8000//programas
+
 // devuelve los datos del usuario segun el id 
 curl -X POST -H "Content-Type: application/json" -d '{"id":6}' http://127.0.0.1:8000/getUserByid
 
