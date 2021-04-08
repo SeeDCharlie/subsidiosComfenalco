@@ -55,4 +55,28 @@ class UserController extends AbstractController
             return $response;
         }
     }
+    /**
+     * @Route("/getUserByid", name="getUserByid", methods = {"POST"})
+     * 
+     */
+
+    public function getUserByid(Request $request,UsuariosRepository $ur)
+    {
+        try {
+            $response = new JsonResponse();
+            $dats =json_decode($request->getContent(), true);
+            $serializer = $this->get('serializer');
+            $data = $serializer->serialize($ur->find($dats['id']), 'json');
+
+            $response->setData(['success' => true, 'usuario' => json_decode( $data , true)]);
+            return $response;
+
+        } catch (Exception $error) {
+            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
+            return $response;
+        }
+    }
+
+
+
 }

@@ -5,6 +5,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apell
 // devuelve todos los usuarios registrados
 curl http://127.0.0.1:8000/getAllUsers
 
+// devuelve los datos del usuario segun el id 
+curl -X POST -H "Content-Type: application/json" -d '{"id":6}' http://127.0.0.1:8000/getUserByid
+
 
 // registro de solicitud a un programa de subsidio
 curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6, "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' http://127.0.0.1:8000/registrarSubsidio
