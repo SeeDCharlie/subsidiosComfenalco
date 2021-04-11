@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\UserServices;
 use Exception;
@@ -15,6 +16,19 @@ use Exception;
 
 class UserController extends AbstractController
 {
+
+    /**
+     * @Route("/getUserSubsidios", name="getUserSubsidios", methods = {"POST", "GET"})
+     * 
+     */
+
+    public function getUserSubsidiosApli(Request $request, UsuariosRepository $usuariosRepository, int $idUser): JsonResponse {
+
+        $subsidiosByUser = $usuariosRepository->getUserSubsidios($idUser);
+
+        return new JsonResponse($subsidiosByUser, Response::HTTP_OK);
+    }
+    
 
     /**
      * @Route("/UserRegistration", name="UserRegistration")

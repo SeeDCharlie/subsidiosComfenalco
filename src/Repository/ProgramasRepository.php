@@ -19,7 +19,7 @@ class ProgramasRepository extends ServiceEntityRepository
         parent::__construct($registry, Programas::class);
     }
 
-    public function getProgramasSQL(): array{
+    public function getProgramasSQL(): array { 
 
         $conn = $this->getEntityManager()->getConnection();
 
