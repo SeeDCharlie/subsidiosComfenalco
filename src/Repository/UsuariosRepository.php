@@ -20,6 +20,21 @@ class UsuariosRepository extends ServiceEntityRepository
     }
 
 
+    public function getAllEmails():array{
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select E_MAIL from USUARIOS';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;
+
+    }
+
     public function getUserSubsidios(int $idUser): array {
 
         $conn = $this->getEntityManager()->getConnection();

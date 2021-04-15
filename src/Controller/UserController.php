@@ -18,17 +18,31 @@ class UserController extends AbstractController
 {
 
     /**
+     * @Route("/getAllEmails", name="getAllEmails", methods = {"POST"})
+     * 
+     */
+
+    public function getAllUserEmails(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
+    {
+
+        $userEmails = $usuariosRepository->getAllEmails();
+
+        return new JsonResponse($userEmails, Response::HTTP_OK);
+    }
+
+    /**
      * @Route("/getUserSubsidios", name="getUserSubsidios", methods = {"POST", "GET"})
      * 
      */
 
-    public function getUserSubsidiosApli(Request $request, UsuariosRepository $usuariosRepository, int $idUser): JsonResponse {
+    public function getUserSubsidiosApli(Request $request, UsuariosRepository $usuariosRepository, int $idUser): JsonResponse
+    {
 
         $subsidiosByUser = $usuariosRepository->getUserSubsidios($idUser);
 
         return new JsonResponse($subsidiosByUser, Response::HTTP_OK);
     }
-    
+
 
     /**
      * @Route("/UserRegistration", name="UserRegistration")
@@ -61,9 +75,8 @@ class UserController extends AbstractController
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->findAll(), 'json');
 
-            $response->setData(['success' => true, 'usuarios' => json_decode( $data , true)]);
+            $response->setData(['success' => true, 'usuarios' => json_decode($data, true)]);
             return $response;
-
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
             return $response;
@@ -74,23 +87,19 @@ class UserController extends AbstractController
      * 
      */
 
-    public function getUserByid(Request $request,UsuariosRepository $ur)
+    public function getUserByid(Request $request, UsuariosRepository $ur)
     {
         try {
             $response = new JsonResponse();
-            $dats =json_decode($request->getContent(), true);
+            $dats = json_decode($request->getContent(), true);
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->find($dats['id']), 'json');
 
-            $response->setData(['success' => true, 'usuario' => json_decode( $data , true)]);
+            $response->setData(['success' => true, 'usuario' => json_decode($data, true)]);
             return $response;
-
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
             return $response;
         }
     }
-
-
-
 }

@@ -6,7 +6,13 @@ curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apell
 curl http://127.0.0.1:8000/getAllUsers
 
 // devuelve todos los programas
-curl http://127.0.0.1:8000//programas
+curl http://127.0.0.1:8000/programas
+
+// devuelve todos los emails de los usuarios
+curl http://127.0.0.1:8000/getAllEmails
+
+// devuelve los datos de los subsidios como el estado, datos del programa y usuario. (Recibe idUser: 2)
+curl -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/getUserSubsidios
 
 // devuelve los datos del usuario segun el id 
 curl -X POST -H "Content-Type: application/json" -d '{"id":6}' http://127.0.0.1:8000/getUserByid
