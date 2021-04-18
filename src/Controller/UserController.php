@@ -18,7 +18,20 @@ class UserController extends AbstractController
 {
 
     /**
-     * @Route("/getAllEmails", name="getAllEmails", methods = {"POST"})
+     * @Route("/getAllDataUserByCorreo", name="getAllDataUserByCorreo", methods = {"GET"})
+     * 
+     */
+
+    public function getAllDataUserByCorreo(Request $request, UsuariosRepository $usuariosRepository, string $correo): JsonResponse
+    {
+
+        $userEmails = $usuariosRepository->getDataByCorreo($correo);
+
+        return new JsonResponse($userEmails, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/getAllEmails", name="getAllEmails", methods = {"GET"})
      * 
      */
 
@@ -31,7 +44,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/getUserSubsidios", name="getUserSubsidios", methods = {"POST", "GET"})
+     * @Route("/getUserSubsidios", name="getUserSubsidios", methods = {"GET"})
      * 
      */
 
