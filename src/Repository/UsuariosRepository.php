@@ -19,6 +19,35 @@ class UsuariosRepository extends ServiceEntityRepository
         parent::__construct($registry, Usuarios::class);
     }
 
+    public function getDataByCorreo(string $correo):array{
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select * from USUARIOS
+        where USUARIOS.E_MAIL = :correo';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;
+    }
+
+    public function getAllEmails():array{
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select E_MAIL from USUARIOS';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;
+
+    }
 
     public function getUserSubsidios(int $idUser): array {
 

@@ -7,6 +7,18 @@ curl http://127.0.0.1:8000/getAllUsers
 
 // devuelve todos los programas
 curl http://127.0.0.1:8000/programas
+<<<<<<< HEAD
+=======
+
+// devuelve todos los emails de los usuarios
+curl http://127.0.0.1:8000/getAllEmails
+
+// devuelve todos los de datos de un usuario según un correo (correo: prueba@hotmail.com)
+curl http://127.0.0.1:8000/getAllDataUserByCorreo
+
+// devuelve los datos de los subsidios como el estado, datos del programa y usuario. (Recibe idUser: 2)
+curl -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/getUserSubsidios
+>>>>>>> d26589ea776f5a32308cf3c05fdd56bc4f80a425
 
 // devuelve los datos del usuario segun el id 
 curl -X POST -H "Content-Type: application/json" -d '{"id":6}' http://127.0.0.1:8000/getUserByid
