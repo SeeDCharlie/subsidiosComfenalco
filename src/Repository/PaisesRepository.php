@@ -19,6 +19,21 @@ class PaisesRepository extends ServiceEntityRepository
         parent::__construct($registry, Paises::class);
     }
 
+    public function getAllPaises():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from PAISES';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }
+
     // /**
     //  * @return Paises[] Returns an array of Paises objects
     //  */

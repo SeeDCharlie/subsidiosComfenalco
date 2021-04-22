@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use \Doctrine\ORM\EntityManager;
-use App\Repository\ProgramasRepository;
+use App\Repository\GenerosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,21 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 
-class ProgramasController extends AbstractController{
+class GenerosController extends AbstractController{
 
     /**
-     *  @Route("/programas",name="programas")
-     */
-    public function getAllProgramas(Request $request, ProgramasRepository $programasRepository): JsonResponse {
+     * @Route("/getGeneros", name="getAllGeneros", methods = {"GET"})
+     * 
+     */    
+    public function getGeneros(Request $request, GenerosRepository $generosRepository):JsonResponse {
 
-        $programDatas = $programasRepository->getProgramasSQL();
-        
-        return new JsonResponse($programDatas, Response::HTTP_OK);
+        $generos = $generosRepository->getAllGeneros();
+
+        return new JsonResponse($generos, Response::HTTP_OK);
 
     }
-
-
-
+ 
 }
 
 

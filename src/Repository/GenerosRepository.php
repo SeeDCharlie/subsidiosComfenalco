@@ -19,6 +19,21 @@ class GenerosRepository extends ServiceEntityRepository
         parent::__construct($registry, Generos::class);
     }
 
+    public function getAllGeneros():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from GENEROS';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }  
+
     // /**
     //  * @return Generos[] Returns an array of Generos objects
     //  */
