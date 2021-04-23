@@ -1,3 +1,14 @@
+// devuelve todos los tipos documentos
+curl http://127.0.0.1:8000/getTiposDocumento
+
+// devuelve todos los generos
+curl http://127.0.0.1:8000/getGeneros
+
+// devuelve todos los ciudades
+curl http://127.0.0.1:8000/getCiudades
+
+// devuelve todos los paises
+curl http://127.0.0.1:8000/getPaises
 
 //prueba para registrar un usuario via POST
 curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apellido": "asda","fechaNacimiento" : "1998-02-16","idGnr" : 2,"numeroDocumento" : 6516516,"email" : "correo@correo.com","idCiudad" : 1,"idPais" : 1,"idTipoDoc" : 1,"password": "password","idTipoUsr": 1}' http://127.0.0.1:8000/UserRegistration

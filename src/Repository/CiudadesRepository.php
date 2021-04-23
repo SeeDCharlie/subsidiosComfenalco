@@ -19,6 +19,21 @@ class CiudadesRepository extends ServiceEntityRepository
         parent::__construct($registry, Ciudades::class);
     }
 
+    public function getAllCiudades():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from CIUDADES';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }    
+
     // /**
     //  * @return Ciudades[] Returns an array of Ciudades objects
     //  */

@@ -19,6 +19,21 @@ class TiposDocumentoRepository extends ServiceEntityRepository
         parent::__construct($registry, TiposDocumento::class);
     }
 
+    public function getAllTiposDocumento():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from TIPOS_DOCUMENTO';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }  
+
     // /**
     //  * @return TiposDocumento[] Returns an array of TiposDocumento objects
     //  */

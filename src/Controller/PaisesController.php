@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use \Doctrine\ORM\EntityManager;
-use App\Repository\ProgramasRepository;
+use App\Repository\PaisesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,21 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 
-class ProgramasController extends AbstractController{
+class PaisesController extends AbstractController{
 
     /**
-     *  @Route("/programas",name="programas")
-     */
-    public function getAllProgramas(Request $request, ProgramasRepository $programasRepository): JsonResponse {
+     * @Route("/getPaises", name="getAllPaises", methods = {"GET"})
+     * 
+     */    
+    public function getPaises(Request $request, PaisesRepository $paisesRepository):JsonResponse {
 
-        $programDatas = $programasRepository->getProgramasSQL();
-        
-        return new JsonResponse($programDatas, Response::HTTP_OK);
+        $paises = $paisesRepository->getAllPaises();
+
+        return new JsonResponse($paises, Response::HTTP_OK);
 
     }
-
-
-
+ 
 }
 
 
