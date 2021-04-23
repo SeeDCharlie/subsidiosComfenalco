@@ -25,12 +25,16 @@ class SubsidiosServices
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaFinalizacion(new DateTime($dats['fechaFinalizacion']));
-            //$soliSubsidio->setFormulario($dats['url']);
+            
 
             $em->persist($soliSubsidio);
             $em->flush();
 
-            $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente"]);
+            $soliSubsidio->setFormulario("uploads/formularioInscripcion/".$soliSubsidio->getIdSubsidios()."_".$dats['nombreArchivo']);
+
+            $em->flush();
+
+            $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios()]);
             return $response;
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}"]);

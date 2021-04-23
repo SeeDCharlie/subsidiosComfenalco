@@ -35,7 +35,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"id":6}' http://127.0.0.1:
 
 
 // registro de solicitud a un programa de subsidio
-curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6, "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' http://127.0.0.1:8000/registrarSubsidio
+curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6,"nombreArchivo":"form.pdf", "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' http://127.0.0.1:8000/registrarSubsidio
 
 curl -X POST -H "Content-Type: multipart/form-data" -F "uploaded_file=@/home/seed/Imágenes/fp.jpg" -F "uploadForm=true" -F "id=1" https://comfenalcosubsidios.seedcharlie.co/uploadFile.php
 // cargar formulario para el registro de un subsidio
