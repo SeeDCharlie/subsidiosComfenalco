@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AnexosService
 {
 
-    public function resgistrarAnexo($dats, $em)
+    public function registrarAnexo($dats, $em)
     {
 
         $response = new JsonResponse();
@@ -23,7 +23,7 @@ class AnexosService
             $anexo->setObservaciones($dats['observaciones']);
             $anexo->setIdSubsidios($dats['id_subsisdio']);
             $anexo->setIdProgReq($dats['idProgReque']);
-            $anexo->setDocumento("uploads/evidenciasSubsidio/".$dats['id_subsisdio']."/".$dats['idProgReque']."_".$dats['nameFile']);
+            $anexo->setDocumento("uploads/evidenciasSubsidio/".$dats['id_subsisdio']."/".$dats['idProgReque']."_".$dats['nombreArchivo']);
             
             $em->persist($anexo);
             $em->flush();
