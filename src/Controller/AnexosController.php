@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\ProgramaRequerimientosRepository;
 use \Doctrine\ORM\EntityManager;
 use App\Repository\ProgramasRepository;
+use App\Repository\SubsidiosRepository;
 use App\Services\AnexosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
