@@ -1,10 +1,16 @@
+// devuelve todas los ciudades según un nombre de departamento {departamento: 'Valle del Cauca'}
+curl http://127.0.0.1:8000/getCiudadesByDepartamento
+
+// devuelve todos los departamentos
+curl http://127.0.0.1:8000/getDepartamentos
+
 // devuelve todos los tipos documentos
 curl http://127.0.0.1:8000/getTiposDocumento
 
 // devuelve todos los generos
 curl http://127.0.0.1:8000/getGeneros
 
-// devuelve todos los ciudades
+// devuelve todas los ciudades
 curl http://127.0.0.1:8000/getCiudades
 
 // devuelve todos los paises

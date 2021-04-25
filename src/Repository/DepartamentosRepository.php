@@ -19,6 +19,21 @@ class DepartamentosRepository extends ServiceEntityRepository
         parent::__construct($registry, Departamentos::class);
     }
 
+    public function getAllDepartamentos():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from DEPARTAMENTOS';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }    
+
     // /**
     //  * @return Departamentos[] Returns an array of Departamentos objects
     //  */
