@@ -16,6 +16,18 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 class CiudadesController extends AbstractController{
 
     /**
+     * @Route("/getCiudadesByDepartamento", name="getCiudadesByDepartamento", methods = {"GET"})
+     * 
+     */    
+    public function getCiudadesByDepartamento(Request $request, CiudadesRepository $ciudadesRepository, String $departamento):JsonResponse {
+
+        $ciudades = $ciudadesRepository->CiudadesByDepartamento($departamento);
+
+        return new JsonResponse($ciudades, Response::HTTP_OK);
+
+    }
+
+    /**
      * @Route("/getCiudades", name="getAllCiudades", methods = {"GET"})
      * 
      */    

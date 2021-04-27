@@ -19,6 +19,23 @@ class CiudadesRepository extends ServiceEntityRepository
         parent::__construct($registry, Ciudades::class);
     }
 
+    public function CiudadesByDepartamento(String $departamento):array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from CIUDADES ciu
+        inner join DEPARTAMENTOS dep on (ciu.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO)
+        where dep.DEPARTAMENTO = :departamento';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }      
+
     public function getAllCiudades():array{
 
         $conn = $this->getEntityManager()->getConnection();
@@ -32,7 +49,7 @@ class CiudadesRepository extends ServiceEntityRepository
         $datos = $stmt->fetchAll();
 
         return $datos;        
-    }    
+    }
 
     // /**
     //  * @return Ciudades[] Returns an array of Ciudades objects
