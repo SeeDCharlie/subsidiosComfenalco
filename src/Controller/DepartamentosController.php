@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
 
-class CiudadesController extends AbstractController{
+class DepartamentosController extends AbstractController{
 
     /**
      * @Route("/getDepartamentos", name="getAllDepartamentos", methods = {"GET"})
