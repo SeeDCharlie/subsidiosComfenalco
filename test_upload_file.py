@@ -11,6 +11,6 @@ valuesForRequirement = {'id_subsidio': 88,'idProgRequerimiento': 8,'guardarEvide
 #valores para la carga de un formulario de inscripcion 
 valuesForForm = {'id_subsidio': 88,'guardarFormulario':True}
 
-r = requests.post(url, files=files, data=valuesForRequirement)
+r = requests.post(url, files=files, data=valuesForForm)
 
 print(r)
