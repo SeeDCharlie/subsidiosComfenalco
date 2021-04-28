@@ -1,6 +1,6 @@
 import requests
 
-url = 'https://comfenalcosubsidios.seedcharlie.co/uploadFile.php'
+url = 'https://comfenalcosubsidios.seedcharlie.co/uploadFile'
 
 #archivo que se va a cargar
 files = {'uploaded_file': open('/home/seed/Imágenes/fp.jpg','rb')}
