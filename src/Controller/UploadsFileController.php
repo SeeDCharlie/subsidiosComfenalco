@@ -26,19 +26,20 @@ class UploadsFileController extends AbstractController
         try {
             $response = new JsonResponse();
             $file_path = "";
-            $idSub = $_POST['id_subsidio'];
+            $dats = $request->getContent();
+            $idSub = $dats['id_subsidio'];
 
             //verificamos si es unformulario de inscripcion el que se va a guardar
-            if ($_POST['guardarFormulario']) {
+            if ($dats['guardarFormulario']) {
 
-                $file_path = "/home/seedch/public_html/subsidiosComfenalco/public/uploads/formularioInscripcion/" . $idSub . "_" . basename($_FILES['uploaded_file']['name']);
+                $file_path = "/home/seedch/public_html/subsidiosComfenalco/public/uploads/formularioInscripcion/" . $idSub . "_" . basename($dats['uploaded_file']['name']);
             }
-            if ($_POST['guardarEvidencia']) {
+            if ($dats['guardarEvidencia']) {
                 $pathEvidenciaSubsidio = "/home/seedch/public_html/subsidiosComfenalco/public/uploads/evidenciasSubsidio/" . $idSub;
 
                 if (creaeteDomFolder($pathEvidenciaSubsidio)) {
 
-                    $file_path = $pathEvidenciaSubsidio . "/" . $_POST['idProgRequerimiento'] . "_" . basename($_FILES['uploaded_file']['name']);
+                    $file_path = $pathEvidenciaSubsidio . "/" . $dats['idProgRequerimiento'] . "_" . basename($dats['uploaded_file']['name']);
                 } else {
                     $response->setData(['success' => false, 'msj' => "no se pudo crear la ubicacion la evidencia del subcidio"]);
                     return $response;
@@ -48,7 +49,7 @@ class UploadsFileController extends AbstractController
 
 
             if ($file_path != "") {
-                if (move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $file_path)) {
+                if (move_uploaded_file($dats['uploaded_file']['tmp_name'], $file_path)) {
                     $response->setData(['success' => true, 'msj' => "Archivo cargado! "]);
                     return $response;
                 } else {
