@@ -6,6 +6,7 @@ use App\Entity\Subsidios;
 use App\Services\SubsidiosServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,13 @@ class SubsidiosController extends AbstractController
      */
 
 
-    public function regisSubsidio(Request $request, EntityManagerInterface $em, SubsidiosServices $ss)
+    public function regisSubsidio(Request $request, EntityManagerInterface $em, SubsidiosServices $ss, ParameterBagInterface $params)
     {
         $response = new JsonResponse();
         if ($request->getMethod() == 'POST') {
 
-            $requestDats = json_decode($request->getContent(), true);
-            return $ss->registrarSubsidio($requestDats, $em);
+
+            return $ss->registrarSubsidio($request, $em, $params->get('forms_directory'));
         } else {
             $response->setData(['success' => false, 'msj' => "Method GET don't response"]);
             return $response;

@@ -12,30 +12,40 @@ class SubsidiosServices
 
 
 
-    public function registrarSubsidio($dats, $em)
+    public function registrarSubsidio($request, $em, $nameFileDirectory)
     {
 
         $response = new JsonResponse();
-        $soliSubsidio = new Subsidios();
+        
 
         try {
+
+            $soliSubsidio = new Subsidios();
+
+            $dats = json_decode($request->getContent(), true);
+
             $soliSubsidio->setIdEstado(1);
             $soliSubsidio->setIdUsuario($dats['idUsr']);
             $soliSubsidio->setIdPrograma($dats['idPrograma']);
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaFinalizacion(new DateTime($dats['fechaFinalizacion']));
-            
+            $soliSubsidio();
 
             $em->persist($soliSubsidio);
             $em->flush();
 
-            $soliSubsidio->setFormulario("uploads/formularioInscripcion/".$soliSubsidio->getIdSubsidios()."_".$dats['nombreArchivo']);
+            $file = $request->files->get('uploaded_file');
+            $fileName = $soliSubsidio->getIdSubsidios().'form_'.new DateTime(date("Y-m-d")). '.' . $file->guessExtension();
+            $file->move($nameFileDirectory, $fileName);
+
+            $soliSubsidio->setFormulario($nameFileDirectory."/".$fileName);
 
             $em->flush();
 
             $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios(), 'idSubsidio'=>$soliSubsidio->getIdSubsidios()]);
             return $response;
+            
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}"]);
             return $response;

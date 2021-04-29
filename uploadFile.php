@@ -18,10 +18,10 @@
         //verificamos si es unformulario de inscripcion el que se va a guardar
         if($_POST['guardarFormulario']){
         
-            $file_path = "uploads/formularioInscripcion/" .$idSub."_".basename($_FILES['uploaded_file']['name']);
+            $file_path = "/home/seedch/public_html/subsidiosComfenalco/public/uploads/formularioInscripcion/" .$idSub."_".basename($_FILES['uploaded_file']['name']);
         }
         if($_POST['guardarEvidencia']){
-            $pathEvidenciaSubsidio = "uploads/evidenciasSubsidio/".$idSub;
+            $pathEvidenciaSubsidio = "/home/seedch/public_html/subsidiosComfenalco/public/uploads/evidenciasSubsidio/".$idSub;
             
             if(creaeteDomFolder($pathEvidenciaSubsidio) ){
                 
