@@ -39,12 +39,13 @@ class SubsidiosServices
             $fileName = $soliSubsidio->getIdSubsidios().'form_'.new DateTime(date("Y-m-d")). '.' . $file->guessExtension();
             $file->move($nameFileDirectory, $fileName);
 
-            $soliSubsidio->setFormulario($nameFileDirectory.$fileName);
+            $soliSubsidio->setFormulario($nameFileDirectory."/".$fileName);
 
             $em->flush();
 
             $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios(), 'idSubsidio'=>$soliSubsidio->getIdSubsidios()]);
             return $response;
+            
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}"]);
             return $response;
