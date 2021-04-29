@@ -25,7 +25,7 @@ class CiudadesRepository extends ServiceEntityRepository
         
         $sql = 'select * from CIUDADES ciu
         inner join DEPARTAMENTOS dep on (ciu.ID_DEPARTAMENTO = dep.ID_DEPARTAMENTO)
-        where dep.DEPARTAMENTO = :departamento';
+        where dep.DEPARTAMENTO = ":departamento" ';
 
         $stmt = $conn->prepare($sql);
 
