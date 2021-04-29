@@ -1,6 +1,8 @@
 import requests
 
-urlFormSubsidio = 'http://127.0.0.1:8000/registrarSubsidio'
+urlFormSubsidio = 'https://comfenalcosubsidios.seedcharlie.co/registrarSubsidio'
+
+url = 'http://127.0.0.1:8000/registrarSubsidio'
 
 #archivo que se va a cargar
 files = {'uploaded_file': open('/home/seed/Imágenes/fp.jpg','rb')}
@@ -11,6 +13,6 @@ valuesForRequirement = {'id_subsidio': 88,'idProgRequerimiento': 8,'guardarEvide
 #valores para la carga de un formulario de inscripcion 
 valuesForForm = {'idUsr': 6, 'idPrograma': 1 ,'fechaFinalizacion': '1994-06-04'}
 
-r = requests.post(urlFormSubsidio, files=files, data=valuesForForm)
+r = requests.post(url, files=files, data=valuesForForm)
 
-print(r)
+print("estado respuesta : " + str(r.status_code) + "\ncontenido respuesta : "  + str(r.content))
