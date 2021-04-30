@@ -22,8 +22,9 @@ class UserController extends AbstractController
      * 
      */
 
-    public function getAllDataUserByCorreo(Request $request, UsuariosRepository $usuariosRepository, string $correo): JsonResponse
+    public function getAllDataUserByCorreo(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
+        $correo = $request->query->get('correo');
 
         $userEmails = $usuariosRepository->getDataByCorreo($correo);
 
