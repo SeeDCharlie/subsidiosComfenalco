@@ -26,8 +26,15 @@ class SubsidiosServices
 
             $usr = $em->getRepository(Usuarios::class)->find($dats['idUsr']);
 
+            $programa = $em->getRepository(Usuarios::class)->find($dats['idPrograma']);
+
             if ($usr == null){
-                $response->setData(['success' => false, 'msj' => "el usuario no existe"]);
+                $response->setData(['success' => false, 'msj' => "el usuario no existe" ]);
+                return $response;
+            }
+
+            if($programa == null){
+                $response->setData(['success' => false, 'msj' => "el programa no existe" ]);
                 return $response;
             }
 
