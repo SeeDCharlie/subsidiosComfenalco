@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Exception;
+use Symfony\Component\Validator\Constraints\Json;
 
 class CiudadesController extends AbstractController{
 
@@ -35,9 +36,7 @@ class CiudadesController extends AbstractController{
                 return $response;
             }else{
                 $ciudades = $serializer->serialize($ciudadesRepository->findByIdDepartamento($dep->getIdDepartamento()), 'json');
-            
-                $response->setData(['ciudades' => json_decode($ciudades, true)], Response::HTTP_OK);
-                return $response;
+                return new JsonResponse(json_decode($ciudades, true), Response::HTTP_OK);
             }
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
