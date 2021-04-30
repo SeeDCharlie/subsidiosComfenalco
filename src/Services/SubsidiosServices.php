@@ -22,11 +22,11 @@ class SubsidiosServices
 
             $soliSubsidio = new Subsidios();
 
-            $dats = json_decode($request->headers, true);
+            $dats =json_decode($request->getContent(), true);
 
-            /*$soliSubsidio->setIdEstado(1);
+            $soliSubsidio->setIdEstado(1);
             
-            $soliSubsidio->setIdUsuario($request->query->get('idUsr'));
+            $soliSubsidio->setIdUsuario($dats['idUsr']);
             $soliSubsidio->setIdPrograma($dats['idPrograma']);
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
@@ -38,11 +38,11 @@ class SubsidiosServices
 
             /*$file = $request->files->get('uploaded_file');
             $fileName = $soliSubsidio->getIdSubsidios().'form_'.new DateTime(date("Y-m-d")). '.' . $file->guessExtension();
-            $file->move($nameFileDirectory, $fileName);*/
+            $file->move($nameFileDirectory, $fileName);
 
-            //$soliSubsidio->setFormulario($nameFileDirectory."/"."file.py");
+            $soliSubsidio->setFormulario($nameFileDirectory."/"."file.py");
 
-            //$em->flush();
+            $em->flush();*/
 
             $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios(), 'idSubsidio'=>$soliSubsidio->getIdSubsidios(), 'dats'=>$dats]);
             $response->setStatusCode(200);
