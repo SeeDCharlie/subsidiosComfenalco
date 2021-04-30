@@ -27,8 +27,9 @@ class SubsidiosController extends AbstractController
         $response = new JsonResponse();
         if ($request->getMethod() == 'POST') {
 
-
-            return $ss->registrarSubsidio($request, $em, $params->get('forms_directory'));
+            $dats = json_decode($request->getContent(), true);
+            
+            return $ss->registrarSubsidio( $dats , $em, $params->get('forms_directory'));
         } else {
             $response->setData(['success' => false, 'msj' => "Method GET don't response"]);
             return $response;

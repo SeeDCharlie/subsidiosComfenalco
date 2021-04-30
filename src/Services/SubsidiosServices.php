@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Subsidios;
+use App\Entity\Usuarios;
 use DateTime;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,7 @@ class SubsidiosServices
 
 
 
-    public function registrarSubsidio($request, $em, $nameFileDirectory)
+    public function registrarSubsidio($dats, $em, $nameFileDirectory)
     {
 
         $response = new JsonResponse();
@@ -22,7 +23,13 @@ class SubsidiosServices
 
             $soliSubsidio = new Subsidios();
 
-            $dats =json_decode($request->getContent(), true);
+
+            $usr = $em->getRepository(Usuarios::class)->find($dats['idUsr']);
+
+            if ($usr == null){
+                $response->setData(['success' => false, 'msj' => "el usuario no existe"]);
+                return $response;
+            }
 
             $soliSubsidio->setIdEstado(1);
             
@@ -31,7 +38,6 @@ class SubsidiosServices
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaFinalizacion(new DateTime($dats['fechaFinalizacion']));
-            $soliSubsidio();
 
             $em->persist($soliSubsidio);
             $em->flush();
@@ -44,7 +50,7 @@ class SubsidiosServices
 
             $em->flush();*/
 
-            $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios(), 'idSubsidio'=>$soliSubsidio->getIdSubsidios(), 'dats'=>$dats]);
+            $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :".$soliSubsidio->getIdSubsidios(), 'idSubsidio'=>$soliSubsidio->getIdSubsidios() ]);
             $response->setStatusCode(200);
             return $response;
 

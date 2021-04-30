@@ -36,7 +36,7 @@ class CiudadesController extends AbstractController{
             }else{
                 $ciudades = $serializer->serialize($ciudadesRepository->findByIdDepartamento($dep->getIdDepartamento()), 'json');
             
-                $response->setData(['success' => true, 'ciudades' => json_decode($ciudades, true)], Response::HTTP_OK);
+                $response->setData(['ciudades' => json_decode($ciudades, true)], Response::HTTP_OK);
                 return $response;
             }
         } catch (Exception $error) {
