@@ -24,11 +24,29 @@ class UserController extends AbstractController
 
     public function getAllDataUserByCorreo(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
-        $correo = $request->query->get('correo');
+        try {
+            $response = new JsonResponse();
 
-        $userEmails = $usuariosRepository->getDataByCorreo($correo);
+            $correo = $request->query->get('correo');
 
-        return new JsonResponse($userEmails, Response::HTTP_OK);
+            $serializer = $this->get('serializer');
+
+            $usr = $usuariosRepository->findOneBy(['eMail' => $correo]);
+
+            if($usr == null ){
+                return new JsonResponse("No Existen Usuarios con este correo : $correo", Response::HTTP_CONFLICT);
+            }else{
+                $data = $serializer->serialize( $usr, 'json');
+
+                $response->setData(json_decode($data, true), Response::HTTP_OK);
+                return $response;
+            }
+
+            
+        } catch (Exception $error) {
+            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"] , Response::HTTP_NOT_FOUND);
+            return $response;
+        }
     }
 
     /**
@@ -85,7 +103,7 @@ class UserController extends AbstractController
     {
         try {
             $response = new JsonResponse();
-
+            
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->findAll(), 'json');
 
