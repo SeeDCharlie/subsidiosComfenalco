@@ -33,18 +33,16 @@ class UserController extends AbstractController
 
             $usr = $usuariosRepository->findOneBy(['eMail' => $correo]);
 
-            if($usr == null ){
+            if ($usr == null) {
                 return new JsonResponse("No Existen Usuarios con este correo : $correo", Response::HTTP_CONFLICT);
-            }else{
-                $data = $serializer->serialize( $usr, 'json');
+            } else {
+                $data = $serializer->serialize($usr, 'json');
 
                 $response->setData(json_decode($data, true), Response::HTTP_OK);
                 return $response;
             }
-
-            
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"] , Response::HTTP_NOT_FOUND);
+            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"], Response::HTTP_NOT_FOUND);
             return $response;
         }
     }
@@ -56,9 +54,7 @@ class UserController extends AbstractController
 
     public function getAllUserEmails(Request $request, UsuariosRepository $usuariosRepository): JsonResponse
     {
-
         $userEmails = $usuariosRepository->getAllEmails();
-
         return new JsonResponse($userEmails, Response::HTTP_OK);
     }
 
@@ -77,7 +73,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/UserRegistration", name="UserRegistration")
+     * @Route("/UserRegistration", name="UserRegistration",methods = {"POST"})
      * 
      */
 
@@ -93,9 +89,38 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/actualizarUsuario", name="actualizarUsuario",methods = {"PUT"})
+     * 
+     */
+
+    public function actualizarUsuario(Request $request, EntityManagerInterface $em, UserServices $us)
+    {
+        try {
+            return $us->userUpdate(json_decode($request->getContent(), true), $em);
+        } catch (Exception $error) {
+            return new Response("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }  
+    }
 
     /**
-     * @Route("/getAllUsers", name="getAllUsers", methods = {"POST", "GET"})
+     * @Route("/eliminarUsuario", name="actualizarUsuario",methods = {"DELETE"})
+     * 
+     */
+
+    public function eliminarUsuario(Request $request, EntityManagerInterface $em, UserServices $us)
+    {
+        try {
+            $idUsr = $request->query->get('idUsuario');
+            return $us->userDelete($idUsr, $em);
+        } catch (Exception $error) {
+            return new Response("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }  
+    }
+
+
+    /**
+     * @Route("/getAllUsers", name="getAllUsers", methods = { "GET"})
      * 
      */
 
@@ -103,7 +128,7 @@ class UserController extends AbstractController
     {
         try {
             $response = new JsonResponse();
-            
+
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->findAll(), 'json');
 
@@ -124,11 +149,17 @@ class UserController extends AbstractController
         try {
             $response = new JsonResponse();
             $dats = json_decode($request->getContent(), true);
-            $serializer = $this->get('serializer');
-            $data = $serializer->serialize($ur->find($dats['id']), 'json');
 
-            $response->setData(['success' => true, 'usuario' => json_decode($data, true)]);
-            return $response;
+            $usuario = $ur->find($dats['id']);
+
+            if(!$usuario){
+                return new JsonResponse("Usuario incorrecto", Response::HTTP_BAD_GATEWAY);
+            }
+
+            $serializer = $this->get('serializer');
+            $data = $serializer->serialize($usuario, 'json');
+
+            return new JsonResponse(['success' => true, 'usuario' => json_decode($data, true)], Response::HTTP_OK);
         } catch (Exception $error) {
             $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
             return $response;

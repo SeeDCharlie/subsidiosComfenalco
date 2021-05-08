@@ -1,53 +1,103 @@
 // devuelve todas los ciudades según un nombre de departamento {departamento: 'Valle del Cauca'}
 https://comfenalcosubsidios.seedcharlie.co/getCiudadesByDepartamento
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los departamentos
 https://comfenalcosubsidios.seedcharlie.co/getDepartamentos
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los tipos documentos
 https://comfenalcosubsidios.seedcharlie.co/getTiposDocumento
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los generos
 https://comfenalcosubsidios.seedcharlie.co/getGeneros
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todas los ciudades
 https://comfenalcosubsidios.seedcharlie.co/getCiudades
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los paises
 https://comfenalcosubsidios.seedcharlie.co/getPaises
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 //prueba para registrar un usuario via POST
 curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apellido": "asda","fechaNacimiento" : "1998-02-16","idGnr" : 2,"numeroDocumento" : 6516516,"email" : "correo@correo.com","idCiudad" : 1,"idPais" : 1,"idTipoDoc" : 1,"password": "password","idTipoUsr": 1}' http://127.0.0.1:8000/UserRegistration
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los usuarios registrados
 https://comfenalcosubsidios.seedcharlie.co/getAllUsers
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los programas
 https://comfenalcosubsidios.seedcharlie.co/programas
 
-
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los emails de los usuarios
 https://comfenalcosubsidios.seedcharlie.co/getAllEmails
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los de datos de un usuario según un correo (correo: prueba@hotmail.com)
 https://comfenalcosubsidios.seedcharlie.co/getAllDataUserByCorreo
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve los datos de los subsidios como el estado, datos del programa y usuario. (Recibe idUser: 2)
 curl -X POST -H "Content-Type: application/json" https://comfenalcosubsidios.seedcharlie.co/getUserSubsidios
 
-
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve los datos del usuario segun el id 
 curl -X POST -H "Content-Type: application/json" -d '{"id":6}' 
 https://comfenalcosubsidios.seedcharlie.co/getUserByid
 
-
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // registro de solicitud a un programa de subsidio
 curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6,"nombreArchivo":"form.pdf", "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' 
 https://comfenalcosubsidios.seedcharlie.co/registrarSubsidio
 
-
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
 // registro de de un anexo
 curl -X POST -H "Content-Type: application/json" -d '{"estado":"estadoPrueba","observaciones":"observacion prueba","id_subsisdio":6,"idProgReque":1,"nombreArchivo":"fileTest.pdf"}' 
 https://comfenalcosubsidios.seedcharlie.co/registrarAnexo
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// actualizar solicitudes de subsidio
 
+url : /actualizarSubsidio
+#datos PUT obligatorios
+
+idSubsidio: Integer
+idEstado: Integer
+idUsr: Integer
+idPrograma: Integer
+fechaFinalizacion: Date(YYYY-MM-DD)
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// actualizar solicitudes de subsidio
+
+url : /actualizarUsuario
+#datos PUT obligatorios
+
+{
+    "isUsr":56,
+    "nombre": "esteban" ,
+    "apellido": "asda",
+    "fechaNacimiento" : "1998-02-16",
+    "idGnr" : 3,
+    "numeroDocumento" : 888,
+    "email" : "hellotumaasma@correo.com",
+    "idCiudad" : 1,
+    "idPais" : 55555,
+    "idTipoDoc" : 1,
+    "password": "password",
+    "idTipoUsr": 1
+}
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// actualizar solicitudes de subsidio
+
+url : /eliminarUsuario
+#datos DELETE obligatorios
+
+idUsuario: Integer
+
+Ejemplo: /eliminarUsuario?idUsuario=56

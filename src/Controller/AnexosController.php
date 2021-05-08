@@ -27,6 +27,7 @@ class AnexosController extends AbstractController
     public function registrarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as)
     {
         $response = new JsonResponse();
+        
         try {
             $requestDats = json_decode($request->getContent(), true);
             return $as->registrarAnexo($requestDats, $em);
@@ -34,8 +35,5 @@ class AnexosController extends AbstractController
             $response->setData(['success' => false, 'msj' => "No se pudo registrar el anexo\nerror: {$error->getMessage()}"]);
             return $response;
         }
-
-        
-       
     }
 }
