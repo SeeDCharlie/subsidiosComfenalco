@@ -99,7 +99,7 @@ class UserController extends AbstractController
         try {
             return $us->userUpdate(json_decode($request->getContent(), true), $em);
         } catch (Exception $error) {
-            return new Response("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }  
     }
 
@@ -114,7 +114,7 @@ class UserController extends AbstractController
             $idUsr = $request->query->get('idUsuario');
             return $us->userDelete($idUsr, $em);
         } catch (Exception $error) {
-            return new Response("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }  
     }
 
