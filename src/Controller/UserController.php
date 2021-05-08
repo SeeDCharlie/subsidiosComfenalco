@@ -89,9 +89,9 @@ class UserController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/actualizarUsuario", name="actualizarUsuario",methods = {"PUT"})
-     * 
+
+     /**
+     * @Route("/actualizarUsuario", name="actualizarUsuario", methods = {"PUT"} )
      */
 
     public function actualizarUsuario(Request $request, EntityManagerInterface $em, UserServices $us)
@@ -104,7 +104,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/eliminarUsuario", name="actualizarUsuario",methods = {"DELETE"})
+     * @Route("/eliminarUsuario", name="eliminarUsuario",methods = {"DELETE"})
      * 
      */
 
