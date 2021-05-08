@@ -101,7 +101,7 @@ class SubsidiosServices
             return new JsonResponse(["msj"=>"Subsidio actualizado"], Response::HTTP_OK);
 
         } catch (Exception $error) {
-            return new JsonResponse(["msj"=>"No se pudo actualizar la solicitud de subsidio\nerror: "].$error->getMessage(), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(["msj"=>"No se pudo actualizar la solicitud de subsidio\nerror: ".$error->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
 }

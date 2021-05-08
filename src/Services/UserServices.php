@@ -78,9 +78,6 @@ class UserServices
 
     public function userUpdate($requestDats , $em){
 
-        $response = new JsonResponse();
-        
-
         try {
             $usuario = $em->getRepository(Usuarios::class)->find($requestDats['idUsr']);
             $tipoUsuario= $em->getRepository(TipoUsuario::class)->find($requestDats['idTipoUsr']);
@@ -125,8 +122,8 @@ class UserServices
             return new JsonResponse(['success' => true, "msj"=>"usuario actualizado exitosamente" ], Response::HTTP_OK);
             
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo guardar el usuario\nerror: {$error->getMessage()}"]);
-            return $response;
+            
+            return new JsonResponse(['success' => false, 'msj' => "No se pudo guardar el usuario\nerror: {$error->getMessage()}"], Response::HTTP_BAD_GATEWAY);
         }
 
     }
