@@ -33,7 +33,7 @@ class UserController extends AbstractController
 
             $usr = $usuariosRepository->findOneBy(['eMail' => $correo]);
 
-            if ($usr == null) {
+            if (!$usr) {
                 return new JsonResponse("No Existen Usuarios con este correo : $correo", Response::HTTP_CONFLICT);
             } else {
                 $data = $serializer->serialize($usr, 'json');

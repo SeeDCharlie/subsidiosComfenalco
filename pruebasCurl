@@ -38,7 +38,7 @@ https://comfenalcosubsidios.seedcharlie.co/programas
 https://comfenalcosubsidios.seedcharlie.co/getAllEmails
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-// devuelve todos los de datos de un usuario según un correo (correo: prueba@hotmail.com)
+// devuelve todos los datos de un usuario según un correo (correo: prueba@hotmail.com)
 https://comfenalcosubsidios.seedcharlie.co/getAllDataUserByCorreo
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
@@ -57,14 +57,24 @@ https://comfenalcosubsidios.seedcharlie.co/registrarSubsidio
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // registro de de un anexo
-curl -X POST -H "Content-Type: application/json" -d '{"estado":"estadoPrueba","observaciones":"observacion prueba","id_subsisdio":6,"idProgReque":1,"nombreArchivo":"fileTest.pdf"}' 
-https://comfenalcosubsidios.seedcharlie.co/registrarAnexo
+URL : /registrarAnexo
+metodo POST
+DATOS:
+{
+    "estado":"estadoPrueba",
+    "observaciones":"observacion prueba",
+    "idSubsidio":6,
+    "idProgRequerimiento":1,
+    "nombreArchivo":"fileTest.pdf"
+}
+
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // actualizar solicitudes de subsidio
 
 url : /actualizarSubsidio
-#datos PUT obligatorios
+metodo PUT
+#datos obligatorios
 
 idSubsidio: Integer
 idEstado: Integer
@@ -73,10 +83,11 @@ idPrograma: Integer
 fechaFinalizacion: Date(YYYY-MM-DD)
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-// actualizar solicitudes de subsidio
+// actualizar datos de un usuario
 
 url : /actualizarUsuario
-#datos PUT obligatorios
+metodo PUT
+#datos obligatorios
 
 {
     "isUsr":56,
@@ -93,11 +104,65 @@ url : /actualizarUsuario
     "idTipoUsr": 1
 }
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-// actualizar solicitudes de subsidio
-
+// eliminar un usuario
+metodo DELETE
 url : /eliminarUsuario
-#datos DELETE obligatorios
+#datos obligatorios
 
 idUsuario: Integer
 
 Ejemplo: /eliminarUsuario?idUsuario=56
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// actualizar un anexo
+metodo PUT
+URL : /actualizarAnexo
+DATOS:
+{   
+    "idAnexo":2,
+    "estado":"estadoPrueba",
+    "observaciones":"observacion prueba",
+    "idSubsisdio":6,
+    "idProgRequerimiento":1,
+    "nombreArchivo":"fileTest.pdf"
+}
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve los anexos registrados a un subsidio
+metodo GET
+URL : https://comfenalcosubsidios.seedcharlie.co/getAnexosPorIdSubsidio?idSubsidio=2
+DATOS:
+
+idSubsidio: Integer
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve todos los requerimientos con su programa
+metodo GET
+URL : https://comfenalcosubsidios.seedcharlie.co/getAllProgramaRequerimientos
+DATOS:
+
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve todos los requerimientos segun un programa
+metodo GET
+URL : https://comfenalcosubsidios.seedcharlie.co/getRequerimietosPorPrograma
+DATOS:
+idPprograma: Integer
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve los datos de un programa segun el id
+metodo GET
+URL : /programasPorId
+DATOS:
+idPprograma: Integer
+
+ejemplo : http://127.0.0.1:8000/programasPorId?idPrograma=8
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve los datos de un requerimiento segun el id
+metodo GET
+URL : /requisitosById
+DATOS:
+idRequerimiento: Integer
+
+ejemplo : http://127.0.0.1:8000/idRequerimiento?idPrograma=8
