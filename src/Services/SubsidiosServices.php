@@ -18,27 +18,20 @@ class SubsidiosServices
 
     public function registrarSubsidio($dats, $em, $nameFileDirectory)
     {
-        $response = new JsonResponse();
         try {
 
             $soliSubsidio = new Subsidios();
-
             $usr = $em->getRepository(Usuarios::class)->find($dats['idUsr']);
-
             $programa = $em->getRepository(Usuarios::class)->find($dats['idPrograma']);
 
             if ($usr == null) {
-                $response->setData(['success' => false, 'msj' => "el usuario no existe"]);
-                return $response;
+                return new JsonResponse("el usuario no existe", Response::HTTP_BAD_GATEWAY);
             }
-
             if ($programa == null) {
-                $response->setData(['success' => false, 'msj' => "el programa no existe"]);
-                return $response;
+                return new JsonResponse("el programa no existe", Response::HTTP_BAD_GATEWAY);
             }
 
             $soliSubsidio->setIdEstado(1);
-
             $soliSubsidio->setIdUsuario($dats['idUsr']);
             $soliSubsidio->setIdPrograma($dats['idPrograma']);
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
@@ -51,16 +44,12 @@ class SubsidiosServices
             /*$file = $request->files->get('uploaded_file');
             $fileName = $soliSubsidio->getIdSubsidios().'form_'.new DateTime(date("Y-m-d")). '.' . $file->guessExtension();
             $file->move($nameFileDirectory, $fileName);
-
             $soliSubsidio->setFormulario($nameFileDirectory."/"."file.py");
-
             $em->flush();*/
 
-            $response->setData(['success' => true, 'msj' => "solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), 'idSubsidio' => $soliSubsidio->getIdSubsidios()], Response::HTTP_OK);
-            return $response;
+            return new JsonResponse("solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}"]);
-            return $response;
+            return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -76,16 +65,16 @@ class SubsidiosServices
             $programa = $entityManager->getRepository(Programas::class)->find($dats['idPrograma']);
 
             if ($sub == null ){
-                return new JsonResponse(["msj"=>"El subsidio no existe o el id es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El subsidio no existe o el id es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if ($estado == null ){
-                return new JsonResponse(["msj"=>"El estado no existe o el id es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El estado no existe o el id es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if ($usr == null ){
-                return new JsonResponse(["msj"=>"El usuario no existe o el id es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El usuario no existe o el id es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if ($programa == null ){
-                return new JsonResponse(["msj"=>"El programa no existe o el id es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El programa no existe o el id es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
 
             $sub->setIdEstado($dats['idEstado']);
@@ -98,10 +87,10 @@ class SubsidiosServices
             $entityManager->persist($sub);
             $entityManager->flush();
 
-            return new JsonResponse(["msj"=>"Subsidio actualizado"], Response::HTTP_OK);
+            return new JsonResponse("Subsidio actualizado", Response::HTTP_OK);
 
         } catch (Exception $error) {
-            return new JsonResponse(["msj"=>"No se pudo actualizar la solicitud de subsidio\nerror: ".$error->getMessage()], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse("No se pudo actualizar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }

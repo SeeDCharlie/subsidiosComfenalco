@@ -33,25 +33,25 @@ class UserServices
             $genero = $em->getRepository(Generos::class)->find($requestDats['idGnr']);
 
             if(!$tipoUsuario ){
-                return new JsonResponse(["msj"=>"tipo de usuario incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("tipo de usuario incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$tipoDocumento){
-                return new JsonResponse(["msj"=>"tipo de documento incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("tipo de documento incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$ciudad){
-                return new JsonResponse(["msj"=>"ciudad incorrecta"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("ciudad incorrecta", Response::HTTP_BAD_GATEWAY);
             }
             if(!$pais){
-                return new JsonResponse(["msj"=>"pais incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("pais incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if($noDocumento){
-                return new JsonResponse(["msj"=>"ya existe un usuario con este numero de documento"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("ya existe un usuario con este numero de documento", Response::HTTP_BAD_GATEWAY);
             }
             if($email){
-                return new JsonResponse(["msj"=>"ya existe un usuario con esta direccion de correo"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("ya existe un usuario con esta direccion de correo", Response::HTTP_BAD_GATEWAY);
             }
             if(!$genero){
-                return new JsonResponse(["msj"=>"El genero es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El genero es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
 
             $usuario->setNombre($requestDats['nombre']);
@@ -68,11 +68,10 @@ class UserServices
             $em->persist($usuario);
             $em->flush();
 
-            return new JsonResponse(['success' => true, "msj"=>"usuario guardado exitosamente"], Response::HTTP_OK);
+            return new JsonResponse("usuario guardado exitosamente", Response::HTTP_OK);
             
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo guardar el usuario\nerror: {$error->getMessage()}"]);
-            return $response;
+            return  new JsonResponse("No se pudo guardar el usuario\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -87,22 +86,22 @@ class UserServices
             $genero = $em->getRepository(Generos::class)->find($requestDats['idGnr']);
 
             if(!$usuario){
-                return new JsonResponse(["msj"=>"usuario incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("usuario incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$tipoUsuario ){
-                return new JsonResponse(["msj"=>"tipo de usuario incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("tipo de usuario incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$tipoDocumento){
-                return new JsonResponse(["msj"=>"tipo de documento incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("tipo de documento incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$ciudad){
-                return new JsonResponse(["msj"=>"ciudad incorrecta"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("ciudad incorrecta", Response::HTTP_BAD_GATEWAY);
             }
             if(!$pais){
-                return new JsonResponse(["msj"=>"pais incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("pais incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if(!$genero){
-                return new JsonResponse(["msj"=>"El genero es incorrecto"], Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El genero es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
 
             $usuario->setNombre($requestDats['nombre']);
@@ -119,11 +118,11 @@ class UserServices
             $em->persist($usuario);
             $em->flush();
 
-            return new JsonResponse(['success' => true, "msj"=>"usuario actualizado exitosamente" ], Response::HTTP_OK);
+            return new JsonResponse("usuario actualizado exitosamente" , Response::HTTP_OK);
             
         } catch (Exception $error) {
             
-            return new JsonResponse(['success' => false, 'msj' => "No se pudo guardar el usuario\nerror: {$error->getMessage()}"], Response::HTTP_BAD_GATEWAY);
+            return new JsonResponse("No se pudo guardar el usuario\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
 
     }
@@ -140,7 +139,7 @@ class UserServices
             $em->remove($usuario);
             $em->flush();
 
-            return new JsonResponse(['success' => true, "msj"=>"usuario eliminado exitosamente" ], Response::HTTP_OK);
+            return new JsonResponse("usuario eliminado exitosamente" , Response::HTTP_OK);
             
         } catch (Exception $error) {
 

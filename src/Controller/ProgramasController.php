@@ -47,7 +47,7 @@ class ProgramasController extends AbstractController{
                 return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
             }
         } catch (Exception $error) {
-            return new JsonResponse(['success' => false, 'msj' => "error: {$error->getMessage()}"], Response::HTTP_NOT_FOUND);
+            return new JsonResponse( "error: {$error->getMessage()}", Response::HTTP_NOT_FOUND);
         }
 
     }

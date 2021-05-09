@@ -17,38 +17,31 @@ class AnexosService
     public function registrarAnexo($dats, $em)
     {
 
-        $response = new JsonResponse();
         $anexo = new Anexos();
 
         try {
 
             $subsidio = $em->getRepository(Subsidios::class)->find($dats['idSubsidio']);
             $requerimiento = $em->getRepository(ProgramaRequerimientos::class)->find($dats['idProgRequerimiento']);
-            if ($subsidio == null) {
-                $response->setData(['success' => false, 'msj' => "El subsidio no existe"], Response::HTTP_BAD_GATEWAY);
+            if (!$subsidio) {
+                return new JsonResponse("El subsidio no existe", Response::HTTP_BAD_GATEWAY);
             }
-            if ($requerimiento == null) {
-                $response->setData(['success' => false, 'msj' => "El requerimiento no existe"], Response::HTTP_BAD_GATEWAY);
+            if (!$requerimiento) {
+                return new JsonResponse("El requerimiento no existe", Response::HTTP_BAD_GATEWAY);
             }
-            if ($subsidio != null && $requerimiento != null) {
+            $anexo->setEstado($dats['estado']);
+            $anexo->setObservaciones($dats['observaciones']);
 
-                $anexo->setEstado($dats['estado']);
-                $anexo->setObservaciones($dats['observaciones']);
+            $anexo->setIdSubsidios($dats['idSubsidio']);
+            $anexo->setIdProgReq($dats['idProgRequerimiento']);
+            $anexo->setDocumento("uploads/evidenciasSubsidio/" . $dats['idSubsidio'] . "/" . $dats['idProgRequerimiento'] . "_" . $dats['nombreArchivo']);
 
-                $anexo->setIdSubsidios($dats['idSubsidio']);
-                $anexo->setIdProgReq($dats['idProgRequerimiento']);
-                $anexo->setDocumento("uploads/evidenciasSubsidio/" . $dats['idSubsidio'] . "/" . $dats['idProgRequerimiento'] . "_" . $dats['nombreArchivo']);
+            $em->persist($anexo);
+            $em->flush();
 
-                $em->persist($anexo);
-                $em->flush();
-
-                $response->setData(['success' => true, 'msj' => "anexo registrada exitosamente,id : " . $anexo->getIdAnexo(), 'id' => $anexo->getIdAnexo()], Response::HTTP_OK);
-            }
-
-            return $response;
+            return new JsonResponse("anexo registrada exitosamente,id : " . $anexo->getIdAnexo(), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo registrar el anexo\nerror: {$error->getMessage()}"], Response::HTTP_BAD_GATEWAY);
-            return $response;
+            return new JsonResponse("No se pudo registrar el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -88,18 +81,19 @@ class AnexosService
 
 
 
-    public function getAnexosPorIdSubsidio($idSubsidio, $em, $serializer){
+    public function getAnexosPorIdSubsidio($idSubsidio, $em, $serializer)
+    {
         try {
 
             $subsidio = $em->getRepository(Subsidios::class)->find($idSubsidio);
-            
-            if(!$subsidio){
+
+            if (!$subsidio) {
                 return new JsonResponse(['success' => false, 'msj' => "El subsidio es incorrecto"]);
-            }else{
+            } else {
                 $anexos = $em->getRepository(Anexos::class)->findByIdSubsidios($idSubsidio);
-                if(!$anexos){
+                if (!$anexos) {
                     return new JsonResponse(['success' => false, 'msj' => "No hay anexos registrados a este subsidio"], Response::HTTP_BAD_GATEWAY);
-                }else{
+                } else {
                     $data = $serializer->serialize($anexos, 'json');
 
                     return new JsonResponse(json_decode($data, true), Response::HTTP_OK);

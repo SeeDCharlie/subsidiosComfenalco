@@ -23,14 +23,11 @@ class AnexosController extends AbstractController
 
     public function registrarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as)
     {
-        $response = new JsonResponse();
-        
         try {
             $requestDats = json_decode($request->getContent(), true);
             return $as->registrarAnexo($requestDats, $em);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo registrar el anexo\nerror: {$error->getMessage()}"]);
-            return $response;
+            return new JsonResponse("No se pudo registrar el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -40,14 +37,11 @@ class AnexosController extends AbstractController
 
     public function actualizarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as)
     {
-        $response = new JsonResponse();
-        
         try {
             $requestDats = json_decode($request->getContent(), true);
             return $as->actualizarAnexo($requestDats, $em);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo devolver la lista de anexo\nerror: {$error->getMessage()}"]);
-            return $response;
+            return  new JsonResponse("No se pudo actualizar el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 
@@ -58,17 +52,12 @@ class AnexosController extends AbstractController
 
     public function getAnexosPorIdSubsidio(Request $request, EntityManagerInterface $em, AnexosService $as)
     {
-        $response = new JsonResponse();
-        
         try {
-
             $serializer = $this->get('serializer');
             $idSubsidio = $request->query->get('idSubsidio');
             return $as->getAnexosPorIdSubsidio($idSubsidio, $em, $serializer);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "No se pudo devolver la lista de anexos\nerror: {$error->getMessage()}"]);
-            return $response;
+            return new JsonResponse("No se pudo devolver el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
-
 }

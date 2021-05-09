@@ -42,7 +42,7 @@ class UserController extends AbstractController
                 return $response;
             }
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"], Response::HTTP_NOT_FOUND);
+            $response->setData("error: {$error->getMessage()}", Response::HTTP_NOT_FOUND);
             return $response;
         }
     }
@@ -65,10 +65,12 @@ class UserController extends AbstractController
 
     public function getUserSubsidiosApli(Request $request, UsuariosRepository $usuariosRepository, int $idUser): JsonResponse
     {
-
-        $subsidiosByUser = $usuariosRepository->getUserSubsidios($idUser);
-
-        return new JsonResponse($subsidiosByUser, Response::HTTP_OK);
+        try {
+            $subsidiosByUser = $usuariosRepository->getUserSubsidios($idUser);
+            return new JsonResponse($subsidiosByUser, Response::HTTP_OK);
+        } catch (Exception $error) {
+            return new JsonResponse("error : " . $error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
 
@@ -79,18 +81,14 @@ class UserController extends AbstractController
 
     public function UserRegistration(Request $request, EntityManagerInterface $em, UserServices $us)
     {
-        $response = new JsonResponse();
-        if ($request->getMethod() == 'POST') {
-
+        try {
             return $us->userRegistration(json_decode($request->getContent(), true), $em);
-        } else {
-            $response->setData(['success' => false, 'msj' => "Method GET don't response"]);
-            return $response;
+        } catch (Exception $error) {
+            return new JsonResponse("error : " . $error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
-
-     /**
+    /**
      * @Route("/actualizarUsuario", name="actualizarUsuario", methods = {"PUT"} )
      */
 
@@ -99,8 +97,8 @@ class UserController extends AbstractController
         try {
             return $us->userUpdate(json_decode($request->getContent(), true), $em);
         } catch (Exception $error) {
-            return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
-        }  
+            return new JsonResponse("Error inesperado : " . $error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -114,8 +112,8 @@ class UserController extends AbstractController
             $idUsr = $request->query->get('idUsuario');
             return $us->userDelete($idUsr, $em);
         } catch (Exception $error) {
-            return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
-        }  
+            return new JsonResponse("Error inesperado : " . $error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
 
@@ -127,15 +125,14 @@ class UserController extends AbstractController
     public function getAllUser(UsuariosRepository $ur)
     {
         try {
-            $response = new JsonResponse();
+            $response = 
 
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->findAll(), 'json');
 
-            $response->setData(['success' => true, 'usuarios' => json_decode($data, true)]);
-            return $response;
+            return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
+            $response->setData("error: {$error->getMessage()}");
             return $response;
         }
     }
@@ -152,16 +149,16 @@ class UserController extends AbstractController
 
             $usuario = $ur->find($dats['id']);
 
-            if(!$usuario){
+            if (!$usuario) {
                 return new JsonResponse("Usuario incorrecto", Response::HTTP_BAD_GATEWAY);
             }
 
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($usuario, 'json');
 
-            return new JsonResponse(['success' => true, 'usuario' => json_decode($data, true)], Response::HTTP_OK);
+            return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData(['success' => false, 'msj' => "error: {$error->getMessage()}"]);
+            $response->setData("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
             return $response;
         }
     }

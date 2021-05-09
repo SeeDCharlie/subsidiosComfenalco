@@ -25,15 +25,11 @@ class SubsidiosController extends AbstractController
 
     public function regisSubsidio(Request $request, EntityManagerInterface $em, SubsidiosServices $ss, ParameterBagInterface $params)
     {
-        $response = new JsonResponse();
-        if ($request->getMethod() == 'POST') {
-
+        try {
             $dats = json_decode($request->getContent(), true);
-            
             return $ss->registrarSubsidio( $dats , $em, $params->get('forms_directory'));
-        } else {
-            $response->setData(['success' => false, 'msj' => "Method GET don't response"]);
-            return $response;
+        } catch (Exception $error) {
+            return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
