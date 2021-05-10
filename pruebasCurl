@@ -46,11 +46,6 @@ https://comfenalcosubsidios.seedcharlie.co/getAllDataUserByCorreo
 curl -X POST -H "Content-Type: application/json" https://comfenalcosubsidios.seedcharlie.co/getUserSubsidios
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-// devuelve los datos del usuario segun el id 
-curl -X POST -H "Content-Type: application/json" -d '{"id":6}' 
-https://comfenalcosubsidios.seedcharlie.co/getUserByid
-
--------------------------------------------------------------- ///////// --------------------------------------------------------------
 // registro de solicitud a un programa de subsidio
 curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6,"nombreArchivo":"form.pdf", "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' 
 https://comfenalcosubsidios.seedcharlie.co/registrarSubsidio
@@ -166,3 +161,12 @@ DATOS:
 idRequerimiento: Integer
 
 ejemplo : http://127.0.0.1:8000/idRequerimiento?idPrograma=8
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+// devuelve los datos del usuario segun el id 
+metodo GET
+URL : /getUserByid
+datos obligatorios:
+idUsuario:Integer
+Ejemplo : http://127.0.0.1:8000/getUserByid?idUsuario=59
+
