@@ -37,11 +37,13 @@ class SubsidiosServices
                 return new JsonResponse("el archivo formulario no existe", Response::HTTP_BAD_GATEWAY);
             }
             $query = $em->getRepository(Subsidios::class)->createQueryBuilder('s')
-                                ->where('s.idUsuario = :usr and s.idPrograma = :programa and s.idEstado > 4')
+                                ->where('s.idUsuario = :usr and s.idPrograma = :programa and s.idEstado < 5')
+                                ->select('s')
                                 ->setParameter('usr',$idUsuario)
                                 ->setParameter('programa', $idPrograma);
+            //$existe = $em->getRepository(Subsidios::class)->findOneBy(["idUsuario" => $idUsuario, "idPrograma" => $idPrograma, "idEstado" =>]);
 
-            if(!$query->getQuery()->setMaxResults(1)->getOneOrNullResult()){
+            if($query->getQuery()->getOneOrNullResult()){
                 return new JsonResponse("el usuario ya empezo un proceso para este programa", Response::HTTP_BAD_GATEWAY);
             }
 

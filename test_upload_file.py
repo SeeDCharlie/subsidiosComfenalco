@@ -11,7 +11,7 @@ files = {'uploaded_file': open('/home/seed/Imágenes/fp.jpg','rb')}
 valuesForRequirement = {'id_subsidio': 88,'idProgRequerimiento': 8,'guardarEvidencia':True}
 
 #valores para la carga de un formulario de inscripcion 
-valuesForForm = {'idUsr': 6, 'idPrograma': 1 ,'fechaFinalizacion': '1994-06-04'}
+valuesForForm = {'idUsr': 6, 'idPrograma': 2 ,'fechaFinalizacion': '1994-06-04'}
 
 r = requests.post(url, files=files, data=valuesForForm)
 
