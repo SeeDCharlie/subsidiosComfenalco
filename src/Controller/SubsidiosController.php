@@ -41,7 +41,6 @@ class SubsidiosController extends AbstractController
     public function actualizarSubsidio(Request $request,  SubsidiosServices $ss, EntityManagerInterface $em)
     {
         try {
-
             $dats = json_decode($request->getContent(), true);
             return $ss->actualizarSubsidio($dats, $em);
         } catch (Exception $error) {

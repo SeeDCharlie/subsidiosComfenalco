@@ -19,19 +19,30 @@ class SubsidiosServices
     public function registrarSubsidio($request, $em, $nameFileDirectory)
     {
         try {
-            $dats = json_decode($request->getContent(), true);
             $idUsuario = $request->request->get('idUsr');
             $idPrograma = $request->request->get('idPrograma');
             $fechaFin = $request->request->get('fechaFinalizacion');
             $soliSubsidio = new Subsidios();
             $usr = $em->getRepository(Usuarios::class)->find($idUsuario);
             $programa = $em->getRepository(Usuarios::class)->find($idPrograma);
+            $file = $request->files->get('uploaded_file');          
 
-            if ($usr == null) {
+            if (!$usr) {
                 return new JsonResponse("el usuario no existe", Response::HTTP_BAD_GATEWAY);
             }
-            if ($programa == null) {
+            if (!$programa) {
                 return new JsonResponse("el programa no existe", Response::HTTP_BAD_GATEWAY);
+            }
+            if(!$file){
+                return new JsonResponse("el archivo formulario no existe", Response::HTTP_BAD_GATEWAY);
+            }
+            $query = $em->getRepository(Subsidios::class)->createQueryBuilder('s')
+                                ->where('s.idUsuario = :usr and s.idPrograma = :programa and s.idEstado > 4')
+                                ->setParameter('usr',$idUsuario)
+                                ->setParameter('programa', $idPrograma);
+
+            if(!$query->getQuery()->setMaxResults(1)->getOneOrNullResult()){
+                return new JsonResponse("el usuario ya empezo un proceso para este programa", Response::HTTP_BAD_GATEWAY);
             }
 
             $soliSubsidio->setIdEstado(1);
@@ -44,10 +55,9 @@ class SubsidiosServices
             $em->persist($soliSubsidio);
             $em->flush();
 
-            $file = $request->files->get('uploaded_file');
-            $fileName = $soliSubsidio->getIdSubsidios().'form_'.uniqid(). '.' . $file->guessExtension();
+            $fileName = $soliSubsidio->getIdSubsidios().'_form_'.uniqid(). '.' . $file->guessExtension();
             $file->move($nameFileDirectory, $fileName);
-            $soliSubsidio->setFormulario($nameFileDirectory."/"."file.py");
+            $soliSubsidio->setFormulario("uploads/formularioInscripcion/".$fileName);
             $em->flush();
 
             return new JsonResponse("solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), Response::HTTP_OK);
