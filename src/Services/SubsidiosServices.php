@@ -24,7 +24,7 @@ class SubsidiosServices
             $fechaFin = $request->request->get('fechaFinalizacion');
             $soliSubsidio = new Subsidios();
             $usr = $em->getRepository(Usuarios::class)->find($idUsuario);
-            $programa = $em->getRepository(Usuarios::class)->find($idPrograma);
+            $programa = $em->getRepository(Programas::class)->find($idPrograma);
             $file = $request->files->get('uploaded_file');          
 
             if (!$usr) {
