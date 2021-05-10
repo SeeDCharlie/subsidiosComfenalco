@@ -125,29 +125,25 @@ class UserController extends AbstractController
     public function getAllUser(UsuariosRepository $ur)
     {
         try {
-            $response = 
-
             $serializer = $this->get('serializer');
             $data = $serializer->serialize($ur->findAll(), 'json');
 
             return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData("error: {$error->getMessage()}");
-            return $response;
+            return new JsonResponse("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
     /**
-     * @Route("/getUserByid", name="getUserByid", methods = {"POST"})
+     * @Route("/getUserByid", name="getUserByid", methods = {"GET"})
      * 
      */
 
     public function getUserByid(Request $request, UsuariosRepository $ur)
     {
         try {
-            $response = new JsonResponse();
-            $dats = json_decode($request->getContent(), true);
+            $idUsr = $request->query->get('idUsuario');
 
-            $usuario = $ur->find($dats['id']);
+            $usuario = $ur->find($idUsr);
 
             if (!$usuario) {
                 return new JsonResponse("Usuario incorrecto", Response::HTTP_BAD_GATEWAY);
@@ -158,8 +154,7 @@ class UserController extends AbstractController
 
             return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
         } catch (Exception $error) {
-            $response->setData("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
-            return $response;
+            return new JsonResponse("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
 }
