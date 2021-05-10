@@ -16,13 +16,16 @@ class SubsidiosServices
 
 
 
-    public function registrarSubsidio($dats, $em, $nameFileDirectory)
+    public function registrarSubsidio($request, $em, $nameFileDirectory)
     {
         try {
-
+            $dats = json_decode($request->getContent(), true);
+            $idUsuario = $request->request->get('idUsr');
+            $idPrograma = $request->request->get('idPrograma');
+            $fechaFin = $request->request->get('fechaFinalizacion');
             $soliSubsidio = new Subsidios();
-            $usr = $em->getRepository(Usuarios::class)->find($dats['idUsr']);
-            $programa = $em->getRepository(Usuarios::class)->find($dats['idPrograma']);
+            $usr = $em->getRepository(Usuarios::class)->find($idUsuario);
+            $programa = $em->getRepository(Usuarios::class)->find($idPrograma);
 
             if ($usr == null) {
                 return new JsonResponse("el usuario no existe", Response::HTTP_BAD_GATEWAY);
@@ -32,22 +35,24 @@ class SubsidiosServices
             }
 
             $soliSubsidio->setIdEstado(1);
-            $soliSubsidio->setIdUsuario($dats['idUsr']);
-            $soliSubsidio->setIdPrograma($dats['idPrograma']);
+            $soliSubsidio->setIdUsuario($idUsuario);
+            $soliSubsidio->setIdPrograma($idPrograma);
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
-            $soliSubsidio->setFechaFinalizacion(new DateTime($dats['fechaFinalizacion']));
+            $soliSubsidio->setFechaFinalizacion(new DateTime($fechaFin));
 
             $em->persist($soliSubsidio);
             $em->flush();
 
-            /*$file = $request->files->get('uploaded_file');
-            $fileName = $soliSubsidio->getIdSubsidios().'form_'.new DateTime(date("Y-m-d")). '.' . $file->guessExtension();
+            $file = $request->files->get('uploaded_file');
+            $fileName = $soliSubsidio->getIdSubsidios().'form_'.uniqid(). '.' . $file->guessExtension();
             $file->move($nameFileDirectory, $fileName);
             $soliSubsidio->setFormulario($nameFileDirectory."/"."file.py");
-            $em->flush();*/
+            $em->flush();
 
             return new JsonResponse("solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), Response::HTTP_OK);
+
+            //return new JsonResponse("datos que llegaron : -" . $request->request->get('idUsr'), Response::HTTP_OK);
         } catch (Exception $error) {
             return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }

@@ -16,3 +16,4 @@ valuesForForm = {'idUsr': 6, 'idPrograma': 1 ,'fechaFinalizacion': '1994-06-04'}
 r = requests.post(url, files=files, data=valuesForForm)
 
 print("estado respuesta : " + str(r.status_code) + "\ncontenido respuesta : "  + str(r.content))
+
