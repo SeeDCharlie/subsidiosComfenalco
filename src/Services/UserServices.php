@@ -19,7 +19,6 @@ class UserServices
 
     public function userRegistration($requestDats , $em)
     {
-        $response = new JsonResponse();
         $usuario = new Usuarios();
 
         try {

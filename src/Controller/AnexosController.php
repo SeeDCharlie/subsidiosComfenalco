@@ -7,6 +7,7 @@ use App\Services\AnexosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,10 @@ class AnexosController extends AbstractController
      *  @Route("/registrarAnexo",name="registrarFromulario", methods = {"POST"} )
      */
 
-    public function registrarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as)
+    public function registrarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as, ParameterBagInterface $params)
     {
-        try {
-            $requestDats = json_decode($request->getContent(), true);
-            return $as->registrarAnexo($requestDats, $em);
+        try {            
+            return $as->registrarAnexo($request, $em, $params->get('evidencias_directory'));
         } catch (Exception $error) {
             return new JsonResponse("No se pudo registrar el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
@@ -35,7 +35,7 @@ class AnexosController extends AbstractController
      *  @Route("/actualizarAnexo",name="actualizarAnexo", methods = {"PUT"} )
      */
 
-    public function actualizarAnexo(Request $request, EntityManagerInterface $em, AnexosService $as)
+    public function actualizarAnexo(Request $request, EntityManagerInterface $em,AnexosService $as)
     {
         try {
             $requestDats = json_decode($request->getContent(), true);

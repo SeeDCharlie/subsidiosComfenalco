@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 class SubsidiosServices
 {
 
-
-
     public function registrarSubsidio($request, $em, $nameFileDirectory)
     {
         try {
@@ -41,7 +39,6 @@ class SubsidiosServices
                                 ->select('s')
                                 ->setParameter('usr',$idUsuario)
                                 ->setParameter('programa', $idPrograma);
-            //$existe = $em->getRepository(Subsidios::class)->findOneBy(["idUsuario" => $idUsuario, "idPrograma" => $idPrograma, "idEstado" =>]);
 
             if($query->getQuery()->getOneOrNullResult()){
                 return new JsonResponse("el usuario ya empezo un proceso para este programa", Response::HTTP_BAD_GATEWAY);
@@ -63,8 +60,6 @@ class SubsidiosServices
             $em->flush();
 
             return new JsonResponse("solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), Response::HTTP_OK);
-
-            //return new JsonResponse("datos que llegaron : -" . $request->request->get('idUsr'), Response::HTTP_OK);
         } catch (Exception $error) {
             return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }

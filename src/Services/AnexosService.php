@@ -14,29 +14,43 @@ class AnexosService
 {
 
 
-    public function registrarAnexo($dats, $em)
+    public function registrarAnexo($request, $em, $fileDir)
     {
 
         $anexo = new Anexos();
 
         try {
 
-            $subsidio = $em->getRepository(Subsidios::class)->find($dats['idSubsidio']);
-            $requerimiento = $em->getRepository(ProgramaRequerimientos::class)->find($dats['idProgRequerimiento']);
+            $idSubsidio = $request->request->get('idSubsidio');
+            $idProgRequerimiento = $request->request->get('idProgRequerimiento');
+            $estado = $request->request->get('estado');
+            $observaciones = $request->request->get('observaciones');
+
+            $subsidio = $em->getRepository(Subsidios::class)->find($idSubsidio);
+            $requerimiento = $em->getRepository(ProgramaRequerimientos::class)->find($idProgRequerimiento);
+            $file = $request->files->get('uploaded_file'); 
+            
+            if(!$file){
+                return new JsonResponse("No hay un archivo cargado", Response::HTTP_BAD_GATEWAY);
+            }
             if (!$subsidio) {
-                return new JsonResponse("El subsidio no existe", Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El subsidio es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
             if (!$requerimiento) {
-                return new JsonResponse("El requerimiento no existe", Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("El requerimiento es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
-            $anexo->setEstado($dats['estado']);
-            $anexo->setObservaciones($dats['observaciones']);
 
-            $anexo->setIdSubsidios($dats['idSubsidio']);
-            $anexo->setIdProgReq($dats['idProgRequerimiento']);
-            $anexo->setDocumento("uploads/evidenciasSubsidio/" . $dats['idSubsidio'] . "/" . $dats['idProgRequerimiento'] . "_" . $dats['nombreArchivo']);
-
+            $anexo->setEstado($estado);
+            $anexo->setObservaciones($observaciones);
+            $anexo->setIdSubsidios($idSubsidio);
+            $anexo->setIdProgReq($idProgRequerimiento);
+            
             $em->persist($anexo);
+            $em->flush();
+
+            $fileName = $anexo->getIdAnexo().'_anexo_'.uniqid(). '.' . $file->guessExtension();
+            $file->move($fileDir, $fileName);
+            $anexo->setDocumento("uploads/evidenciasSubsidio/".$fileName);
             $em->flush();
 
             return new JsonResponse("anexo registrada exitosamente,id : " . $anexo->getIdAnexo(), Response::HTTP_OK);
@@ -44,7 +58,6 @@ class AnexosService
             return new JsonResponse("No se pudo registrar el anexo\nerror: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
-
 
     public function actualizarAnexo($dats, $em)
     {
