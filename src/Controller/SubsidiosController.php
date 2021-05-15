@@ -52,7 +52,8 @@ class SubsidiosController extends AbstractController
 
     /**
      * @Route("/consultarSubsidios", name="consultarSubsidios", methods = {"GET"})
-    */
+     * 
+     */
     public function consultarSubsidios(Request $request, SubsidiosRepository $subsidiosRepository): JsonResponse
     {   
         
