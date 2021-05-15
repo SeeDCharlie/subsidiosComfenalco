@@ -55,9 +55,9 @@ class SubsidiosController extends AbstractController
     */
     public function consultarSubsidios(Request $request, SubsidiosRepository $subsidiosRepository): JsonResponse
     {   
-        $subsidios = $subsidiosRepository->findAll();
+        
         try {
-            
+            $subsidios = $subsidiosRepository->findAll();
             return new JsonResponse($subsidios, Response::HTTP_OK);
         } catch (Exception $error) {
             return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
