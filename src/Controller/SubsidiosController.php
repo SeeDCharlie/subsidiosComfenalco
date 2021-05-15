@@ -55,7 +55,7 @@ class SubsidiosController extends AbstractController
     */
     public function consultarSubsidios(Request $request, SubsidiosRepository $subsidiosRepository): JsonResponse
     {   
-        $subsidios = $subsidiosRepository.getAllSubsidios();
+        $subsidios = $subsidiosRepository->findAll();
         try {
             
             return new JsonResponse($subsidios, Response::HTTP_OK);
