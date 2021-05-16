@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\UserServices;
+use Doctrine\ORM\EntityManager;
 use Exception;
 
 
@@ -63,11 +64,21 @@ class UserController extends AbstractController
      * 
      */
 
-    public function getUserSubsidiosApli(Request $request, UsuariosRepository $usuariosRepository, int $idUser): JsonResponse
+    public function getUserSubsidiosApli(Request $request, UserServices $us, EntityManagerInterface $em): JsonResponse
     {
         try {
-            $subsidiosByUser = $usuariosRepository->getUserSubsidios($idUser);
-            return new JsonResponse($subsidiosByUser, Response::HTTP_OK);
+
+            /*
+            select e.estado, e.info_estado, p.programa, s.id_subsidios 
+            from SUBSIDIOS s 
+            inner join ESTADOS_SUBSIDIOS e on (s.ID_ESTADO = e.id_estado)
+            inner join PROGRAMAS p on (s.ID_PROGRAMA = p.ID_PROGRAMA)
+            inner join USUARIOS u on (u.ID_USUARIO = s.ID_USUARIO)
+            where u.E_MAIL = 'hellotumaasma@correo.com';
+            */
+            $serializer = $this->get('serializer');
+            $correo = $request->query->get('correo');
+            return $us->getSubsidiosByuserEmail($correo, $em, $serializer);
         } catch (Exception $error) {
             return new JsonResponse("error : " . $error->getMessage(), Response::HTTP_BAD_REQUEST);
         }

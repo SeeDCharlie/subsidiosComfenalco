@@ -42,9 +42,11 @@ https://comfenalcosubsidios.seedcharlie.co/getAllEmails
 https://comfenalcosubsidios.seedcharlie.co/getAllDataUserByCorreo
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-// devuelve los datos de los subsidios como el estado, datos del programa y usuario. (Recibe idUser: 2)
-curl -X POST -H "Content-Type: application/json" https://comfenalcosubsidios.seedcharlie.co/getUserSubsidios
-
+// devuelve los datos de los subsidios como el estado, datos del programa y usuario. 
+URL : https://comfenalcosubsidios.seedcharlie.co/getUserSubsidios
+metodo GET
+# datos obligatorios
+correo: string
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // registro de solicitud a un programa de subsidio
 curl -X POST -H "Content-Type: application/json" -d '{"idUsr":6,"nombreArchivo":"form.pdf", "idPrograma":2, "fechaFinalizacion":"2021-03-05"}' 
