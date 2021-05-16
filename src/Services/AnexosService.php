@@ -21,18 +21,22 @@ class AnexosService
 
         try {
 
-            $idSubsidio = $request->request->get('idSubsidio');
-            $idProgRequerimiento = $request->request->get('idProgRequerimiento');
-            $estado = $request->request->get('estado');
-            $observaciones = $request->request->get('observaciones');
+            $datos = json_decode($request->getContent(), true);
+
+            $idSubsidio = $datos['idSubsidio'];
+            $idProgRequerimiento = $datos['idProgRequerimiento'];
+            $estado = $datos['estado'];
+            $observaciones = $datos['observaciones'];
+            $document = $datos['documento'];
 
             $subsidio = $em->getRepository(Subsidios::class)->find($idSubsidio);
             $requerimiento = $em->getRepository(ProgramaRequerimientos::class)->find($idProgRequerimiento);
-            $file = $request->files->get('uploaded_file'); 
             
-            if(!$file){
+            //$file = $request->files->get('uploaded_file'); 
+            
+            /*if(!$file){
                 return new JsonResponse("No hay un archivo cargado", Response::HTTP_BAD_GATEWAY);
-            }
+            }*/
             if (!$subsidio) {
                 return new JsonResponse("El subsidio es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
@@ -44,14 +48,14 @@ class AnexosService
             $anexo->setObservaciones($observaciones);
             $anexo->setIdSubsidios($idSubsidio);
             $anexo->setIdProgReq($idProgRequerimiento);
+            $anexo->setDocumento($document);
             
             $em->persist($anexo);
             $em->flush();
 
-            $fileName = $anexo->getIdAnexo().'_anexo_'.uniqid(). '.' . $file->guessExtension();
+            /*$fileName = $anexo->getIdAnexo().'_anexo_'.uniqid(). '.' . $file->guessExtension();
             $file->move($fileDir, $fileName);
-            $anexo->setDocumento("uploads/evidenciasSubsidio/".$fileName);
-            $em->flush();
+            $em->flush();*/
 
             return new JsonResponse("anexo registrada exitosamente,id : " . $anexo->getIdAnexo(), Response::HTTP_OK);
         } catch (Exception $error) {
