@@ -17,13 +17,17 @@ class SubsidiosServices
     public function registrarSubsidio($request, $em, $nameFileDirectory)
     {
         try {
-            $idUsuario = $request->request->get('idUsr');
-            $idPrograma = $request->request->get('idPrograma');
-            $fechaFin = $request->request->get('fechaFinalizacion');
+
+            $datos = json_decode($request->getContent(), true);
+
+            $idUsuario = $datos['idUsr'];
+            $idPrograma = $datos['idPrograma'];
+            $fechaFin = $datos['fechaFinalizacion'];
+            $url = $datos['formulario'];
             $soliSubsidio = new Subsidios();
             $usr = $em->getRepository(Usuarios::class)->find($idUsuario);
             $programa = $em->getRepository(Programas::class)->find($idPrograma);
-            $file = $request->files->get('uploaded_file');          
+            //$file = $request->files->get('uploaded_file');          
 
             if (!$usr) {
                 return new JsonResponse("el usuario no existe", Response::HTTP_BAD_GATEWAY);
@@ -31,9 +35,9 @@ class SubsidiosServices
             if (!$programa) {
                 return new JsonResponse("el programa no existe", Response::HTTP_BAD_GATEWAY);
             }
-            if(!$file){
+            /*if(!$file){
                 return new JsonResponse("el archivo formulario no existe", Response::HTTP_BAD_GATEWAY);
-            }
+            }*/
             $query = $em->getRepository(Subsidios::class)->createQueryBuilder('s')
                                 ->where('s.idUsuario = :usr and s.idPrograma = :programa and s.idEstado < 5')
                                 ->select('s')
@@ -50,14 +54,15 @@ class SubsidiosServices
             $soliSubsidio->setFechaCreacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaModificacion(new DateTime(date("Y-m-d")));
             $soliSubsidio->setFechaFinalizacion(new DateTime($fechaFin));
+            $soliSubsidio->setFormulario($url);
 
             $em->persist($soliSubsidio);
             $em->flush();
 
-            $fileName = $soliSubsidio->getIdSubsidios().'_form_'.uniqid(). '.' . $file->guessExtension();
-            $file->move($nameFileDirectory, $fileName);
-            $soliSubsidio->setFormulario("uploads/formularioInscripcion/".$fileName);
-            $em->flush();
+            /*$fileName = $soliSubsidio->getIdSubsidios().'_form_'.uniqid(). '.' . $file->guessExtension();
+            $file->move($nameFileDirectory, $fileName);*/
+            //$soliSubsidio->setFormulario("uploads/formularioInscripcion/".$fileName);
+            //$em->flush();
 
             return new JsonResponse("solicitud registrada exitosamente,id :" . $soliSubsidio->getIdSubsidios(), Response::HTTP_OK);
         } catch (Exception $error) {
@@ -70,7 +75,7 @@ class SubsidiosServices
     {
 
         try {
-
+            
             $sub = $entityManager->getRepository(Subsidios::class)->find($dats['idSubsidio']);
             $estado = $entityManager->getRepository(EstadosSubsidios::class)->find($dats['idEstado']);
             $usr = $entityManager->getRepository(Usuarios::class)->find($dats['idUsr']);
