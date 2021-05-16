@@ -19,6 +19,21 @@ class SubsidiosRepository extends ServiceEntityRepository
         parent::__construct($registry, Subsidios::class);
     }
 
+    public function getAllSubsidios():array{
+
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = 'select * from SUBSIDIOS';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+
+        $datos = $stmt->fetchAll();
+
+        return $datos;        
+    }
+
     // /**
     //  * @return Subsidios[] Returns an array of Subsidios objects
     //  */
