@@ -27,7 +27,7 @@ class ProgramasRepository extends ServiceEntityRepository
         // inner join PROGRAMA_REQUERIMIENTOS proRe on (pro.ID_PROGRAMA = proRe.ID_PROGRAMA)
         // inner join REQUERIMIENTOS re on (proRe.ID_REQUERIMIENTOS = re.ID_REQUERIMIENTOS)';
 
-        $sql = 'select pro.PROGRAMA, pro.INFO_PROGRAMA from PROGRAMAS pro';
+        $sql = 'select pro.ID_PROGRAMA, pro.PROGRAMA, pro.INFO_PROGRAMA from PROGRAMAS pro';
 
 
         $stmt = $conn->prepare($sql);
