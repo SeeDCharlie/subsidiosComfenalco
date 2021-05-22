@@ -65,5 +65,14 @@ class SubsidiosController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/getContSusidiosStat", name="getContSusidiosStat", methods = {"GET"})
+     * 
+     */
+
+    public function getContSusidiosStat(EntityManagerInterface $em, SubsidiosServices $ss ){
+        return $ss->getContSusidiosStat($em);
+    }
+
 
 }

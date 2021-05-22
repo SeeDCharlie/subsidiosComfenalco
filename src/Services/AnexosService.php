@@ -80,12 +80,15 @@ class AnexosService
             if (!$requerimiento) {
                 return new JsonResponse(['success' => false, 'msj' => "El requerimiento no existe"], Response::HTTP_BAD_GATEWAY);
             }
+            if(empty($dats['documento'])){
+                return new JsonResponse(['success' => false, 'msj' => "NO hay Url para el documento"], Response::HTTP_BAD_GATEWAY);
+            }
 
             $anexo->setEstado($dats['estado']);
             $anexo->setObservaciones($dats['observaciones']);
             $anexo->setIdSubsidios($dats['idSubsidio']);
             $anexo->setIdProgReq($dats['idProgRequerimiento']);
-            $anexo->setDocumento("uploads/evidenciasSubsidio/" . $dats['idSubsidio'] . "/" . $dats['idProgRequerimiento'] . "_" . $dats['nombreArchivo']);
+            $anexo->setDocumento($dats['documento']);
 
             $em->persist($anexo);
             $em->flush();

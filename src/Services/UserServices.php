@@ -15,6 +15,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\UsuariosRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Length;
 
 class UserServices
 {
@@ -33,6 +34,12 @@ class UserServices
             $email = $em->getRepository(Usuarios::class)->findOneBy(["eMail" => $requestDats['email']]);
             $genero = $em->getRepository(Generos::class)->find($requestDats['idGnr']);
 
+            if(empty($requestDats['numeroDocumento'])){
+                return new JsonResponse("Numero de documento vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['email']) || strlen($requestDats['email']) < 7){
+                return new JsonResponse("Direccion de correo incorrecta", Response::HTTP_BAD_GATEWAY);
+            }
             if (!$tipoUsuario) {
                 return new JsonResponse("tipo de usuario incorrecto", Response::HTTP_BAD_GATEWAY);
             }
@@ -54,6 +61,16 @@ class UserServices
             if (!$genero) {
                 return new JsonResponse("El genero es incorrecto", Response::HTTP_BAD_GATEWAY);
             }
+            if(empty($requestDats['nombre'])){
+                return new JsonResponse("Nombre vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['apellido'])){
+                return new JsonResponse("Apellido vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['password'])){
+                return new JsonResponse("Contraseña vacia", Response::HTTP_BAD_GATEWAY);
+            }
+            
 
             $usuario->setNombre($requestDats['nombre']);
             $usuario->setApellido($requestDats['apellido']);
@@ -85,9 +102,18 @@ class UserServices
             $ciudad = $em->getRepository(Ciudades::class)->find($requestDats['idCiudad']);
             $pais = $em->getRepository(Paises::class)->find($requestDats['idPais']);
             $genero = $em->getRepository(Generos::class)->find($requestDats['idGnr']);
+            $email = $em->getRepository(Usuarios::class)->findOneBy(["eMail" => $requestDats['email']]);
+
+            
 
             if (!$usuario) {
-                return new JsonResponse("usuario incorrecto", Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("id usuario incorrecto", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['email'])){
+                return new JsonResponse("Direccion de correo vacia", Response::HTTP_BAD_GATEWAY);
+            }
+            if($email && $email->getIdUsuario() != $usuario->getIdUsuario() ){
+                return new JsonResponse("Este email ya esta registrado a otro usuario", Response::HTTP_BAD_GATEWAY);
             }
             if (!$tipoUsuario) {
                 return new JsonResponse("tipo de usuario incorrecto", Response::HTTP_BAD_GATEWAY);
@@ -103,6 +129,18 @@ class UserServices
             }
             if (!$genero) {
                 return new JsonResponse("El genero es incorrecto", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['nombre'])){
+                return new JsonResponse("Nombre vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['apellido'])){
+                return new JsonResponse("Apellido vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['numeroDocumento'])){
+                return new JsonResponse("Numero de documento vacio", Response::HTTP_BAD_GATEWAY);
+            }
+            if(empty($requestDats['password'])){
+                return new JsonResponse("Contraseña vacia", Response::HTTP_BAD_GATEWAY);
             }
 
             $usuario->setNombre($requestDats['nombre']);

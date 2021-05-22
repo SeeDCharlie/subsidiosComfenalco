@@ -116,12 +116,12 @@ metodo PUT
 URL : /actualizarAnexo
 DATOS:
 {   
-    "idAnexo":2,
-    "estado":"estadoPrueba",
-    "observaciones":"observacion prueba",
-    "idSubsisdio":6,
+    "idAnexo":6,
+    "estado":"estadoPrueba actualizacion",
+    "observaciones":"observacion prueba actualizacion",
+    "idSubsidio":58,
     "idProgRequerimiento":1,
-    "nombreArchivo":"fileTest.pdf"
+    "documento":"url"
 }
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
@@ -171,4 +171,9 @@ URL : /getUserByid
 datos obligatorios:
 idUsuario:Integer
 Ejemplo : http://127.0.0.1:8000/getUserByid?idUsuario=59
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+//devuelve el numero de subsidios que hay por cada estado de subsidio
+metodo GET
+URL : /getContSusidiosStat
 

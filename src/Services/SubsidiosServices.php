@@ -110,4 +110,22 @@ class SubsidiosServices
             return new JsonResponse("No se pudo actualizar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
+
+
+    public function getContSusidiosStat($em){
+
+        try{
+            $postulado = $em->getRepository(Subsidios::class)->count(['idEstado' => 1]);
+            $porVerificar = $em->getRepository(Subsidios::class)->count(['idEstado' => 2]);
+            $calificado = $em->getRepository(Subsidios::class)->count(['idEstado' => 3]);
+            $asignado = $em->getRepository(Subsidios::class)->count(['idEstado' => 4]);
+            $cancelado = $em->getRepository(Subsidios::class)->count(['idEstado' => 5]);
+
+            return new JsonResponse(['postulado'=> $postulado, 'porVerificar' => $porVerificar, 'calificado' => $calificado, 'asignado' => $asignado , 'cancelado' => $cancelado], Response::HTTP_OK);
+
+        }
+        catch(Exception $error){
+            return new JsonResponse("error inesperado \nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
 }
