@@ -22,8 +22,23 @@ https://comfenalcosubsidios.seedcharlie.co/getCiudades
 https://comfenalcosubsidios.seedcharlie.co/getPaises
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
-//prueba para registrar un usuario via POST
-curl -X POST -H "Content-Type: application/json" -d '{"nombre": "carlos" ,"apellido": "asda","fechaNacimiento" : "1998-02-16","idGnr" : 2,"numeroDocumento" : 6516516,"email" : "correo@correo.com","idCiudad" : 1,"idPais" : 1,"idTipoDoc" : 1,"password": "password","idTipoUsr": 1}' http://127.0.0.1:8000/UserRegistration
+//registrar un usuario via POST
+URL :     /UserRegistration
+metodo POST
+{
+    "nombre": "carlos" ,
+    "apellido": "asda",
+    "fechaNacimiento" : "1998-02-16",
+    "idGnr" : 2,
+    "numeroDocumento" : 6516516,
+    "email" : "correo@correo.com",
+    "idCiudad" : 1,
+    "idPais" : 1,
+    "idTipoDoc" : 1,
+    "password": "password",
+    "idTipoUsr": 1
+}
+
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve todos los usuarios registrados
@@ -57,14 +72,15 @@ https://comfenalcosubsidios.seedcharlie.co/registrarSubsidio
 URL : /registrarAnexo
 metodo POST
 DATOS:
-{
-    "estado":"estadoPrueba",
-    "observaciones":"observacion prueba",
-    "idSubsidio":6,
-    "idProgRequerimiento":1,
-    "nombreArchivo":"fileTest.pdf"
-}
 
+{
+    "estado":"activo",
+    "observaciones":"observacion tres",
+    "idSubsidio":27,
+    "idProgRequerimiento":1,
+    "nombreArchivo":"fileTestdos.pdf",
+    "documento":"url"
+}
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // actualizar solicitudes de subsidio
@@ -115,15 +131,15 @@ Ejemplo: /eliminarUsuario?idUsuario=56
 metodo PUT
 URL : /actualizarAnexo
 DATOS:
+
 {   
     "idAnexo":6,
     "estado":"estadoPrueba actualizacion",
     "observaciones":"observacion prueba actualizacion",
     "idSubsidio":58,
     "idProgRequerimiento":1,
-    "documento":"url"
+    "documento":"url actualizada"
 }
-
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // devuelve los anexos registrados a un subsidio
 metodo GET
