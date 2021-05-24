@@ -64,7 +64,32 @@ class SubsidiosController extends AbstractController
             return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
 
         } catch (Exception $error) {
-            return new JsonResponse("No se pudo registrar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+            return new JsonResponse("No se pudo consultar los subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/consultarSubsidiosById", name="consultarSubsidiosById", methods = {"GET"})
+     * 
+     */
+    public function consultarSubsidiosById(Request $request, SubsidiosRepository $subsidiosRepository): JsonResponse
+    {   
+        
+        try {
+            $serializer = $this->get('serializer');
+            $id = $request->query->get('id');
+
+            $subsidios = $subsidiosRepository->find($id);
+            if(! $subsidios){
+                return new JsonResponse("no hay un subsidio con este id", Response::HTTP_OK);
+            }else{
+                $data = $serializer->serialize($subsidiosRepository->find($id), 'json');
+
+                return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
+            }
+
+        } catch (Exception $error) {
+            return new JsonResponse("No se pudo consultar el subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
