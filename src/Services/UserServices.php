@@ -209,4 +209,31 @@ class UserServices
             return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);    
         }
     }
+
+
+    public function getSubsidiosByuserId($id, $em, $serializer)
+    {
+
+
+        try {
+            $query = $em->getRepository(Subsidios::class)->createQueryBuilder('s')
+                ->select('e.estado', 'e.infoEstado', 'p.programa', 's.idSubsidios')
+                ->innerJoin('App\Entity\EstadosSubsidios', 'e','WITH', 's.idEstado = e.idEstado')
+                ->innerJoin('App\Entity\Programas', 'p','WITH', 's.idPrograma = p.idPrograma')
+                ->innerJoin('App\Entity\Usuarios', 'u','WITH', 's.idUsuario = u.idUsuario')
+                ->where('u.idUsuario = :id')
+                ->setParameter('id', $id)
+                ->getQuery();
+            $resultQuery = $query->getResult();
+
+            if (!$resultQuery) {
+                return new JsonResponse("No hay subsidios para este id de usuario : $id", Response::HTTP_OK);
+            } else {
+                $data = $serializer->serialize($resultQuery, 'json');
+                return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
+            }
+        } catch (Exception $error) {
+            return new JsonResponse("Error inesperado : ".$error->getMessage(), Response::HTTP_BAD_REQUEST);    
+        }
+    }
 }

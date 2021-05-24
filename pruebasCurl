@@ -193,3 +193,9 @@ Ejemplo : http://127.0.0.1:8000/getUserByid?idUsuario=59
 metodo GET
 URL : /getContSusidiosStat
 
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+//devuelve los subsidios que hay registrados al id de un usuario
+metodo GET
+URL : /getSubsidiosByuserId
+
+id : Integer
