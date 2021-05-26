@@ -175,4 +175,31 @@ class UserController extends AbstractController
             return new JsonResponse("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
         }
     }
+
+    /**
+     * @Route("/cambiarTokenCel", name="cambiarTokenCel", methods = {"PUT"})
+     * 
+     */
+
+    public function cambiarTokenCel(Request $request, UsuariosRepository $ur, EntityManagerInterface $em )
+    {
+        try {
+            $dats = json_decode($request->getContent(), true);
+
+            $usuario = $ur->find($dats['idUsr']);
+            $token = $dats['tokenCel'];
+
+            if (!$usuario) {
+                return new JsonResponse("Usuario incorrecto", Response::HTTP_BAD_GATEWAY);
+            }
+
+            $usuario->setTokenCel($token);
+            $em->persist($usuario);
+            $em->flush();
+
+            return new JsonResponse('token actualizado', Response::HTTP_OK);
+        } catch (Exception $error) {
+            return new JsonResponse("error: {$error->getMessage()}", Response::HTTP_BAD_GATEWAY);
+        }
+    }
 }
