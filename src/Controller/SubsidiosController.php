@@ -62,7 +62,6 @@ class SubsidiosController extends AbstractController
             $data = $serializer->serialize($subsidiosRepository->findAll(), 'json');
 
             return new JsonResponse(json_decode($data, true), Response::HTTP_OK);
-
         } catch (Exception $error) {
             return new JsonResponse("No se pudo consultar los subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }

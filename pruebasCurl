@@ -88,12 +88,14 @@ DATOS:
 url : /actualizarSubsidio
 metodo PUT
 #datos obligatorios
+{
+    idSubsidio: Integer,
+    idEstado: Integer,
+    idUsr: Integer,
+    idPrograma: Integer,
+    fechaFinalizacion: Date(YYYY-MM-DD)
+}
 
-idSubsidio: Integer
-idEstado: Integer
-idUsr: Integer
-idPrograma: Integer
-fechaFinalizacion: Date(YYYY-MM-DD)
 
 -------------------------------------------------------------- ///////// --------------------------------------------------------------
 // actualizar datos de un usuario
@@ -199,3 +201,13 @@ metodo GET
 URL : /getSubsidiosByuserId
 
 id : Integer
+
+-------------------------------------------------------------- ///////// --------------------------------------------------------------
+//devuelve los datos de un subsidio segun el id del subsidio
+metodo GET
+URL : /consultarSubsidiosById
+
+id : Integer
+
+---------------------------------- para hacer
+* total de porcentaje de anexos aprobados por subsidio

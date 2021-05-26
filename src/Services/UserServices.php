@@ -70,6 +70,9 @@ class UserServices
             if(empty($requestDats['password'])){
                 return new JsonResponse("Contraseña vacia", Response::HTTP_BAD_GATEWAY);
             }
+            if(array_key_exists('token_cel', $requestDats)){
+                $usuario->setTokenCel($requestDats['token_cel']);
+            } 
             
 
             $usuario->setNombre($requestDats['nombre']);
@@ -142,6 +145,9 @@ class UserServices
             if(empty($requestDats['password'])){
                 return new JsonResponse("Contraseña vacia", Response::HTTP_BAD_GATEWAY);
             }
+            if(array_key_exists('token_cel', $requestDats)){
+                $usuario->setTokenCel($requestDats['token_cel']);
+            }   
 
             $usuario->setNombre($requestDats['nombre']);
             $usuario->setApellido($requestDats['apellido']);

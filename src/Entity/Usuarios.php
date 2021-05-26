@@ -99,6 +99,26 @@ class Usuarios
      */
     private $idTipoUsuario;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="token_cel", type="string", length=150, nullable=true)
+     */
+    private $tokenCel;
+
+    public function getTokenCel(): ?string
+    {
+        return $this->tokenCel;
+    }
+
+    public function setTokenCel(string $tokenCel): self
+    {
+        $this->tokenCel = $tokenCel;
+
+        return $this;
+    }
+
     public function getIdUsuario(): ?int
     {
         return $this->idUsuario;
