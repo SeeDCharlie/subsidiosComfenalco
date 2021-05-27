@@ -186,11 +186,11 @@ class UserController extends AbstractController
         try {
             $dats = json_decode($request->getContent(), true);
 
-            $usuario = $ur->find($dats['idUsr']);
+            $usuario = $ur->findOneByEMail($dats['email']);
             $token = $dats['tokenCel'];
 
             if (!$usuario) {
-                return new JsonResponse("Usuario incorrecto", Response::HTTP_BAD_GATEWAY);
+                return new JsonResponse("el email no existe", Response::HTTP_BAD_GATEWAY);
             }
 
             $usuario->setTokenCel($token);
