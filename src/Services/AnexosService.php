@@ -112,7 +112,7 @@ class AnexosService
             } else {
 
                 $query = $em->getRepository(Anexos::class)->createQueryBuilder('a')
-                ->select('a.idAnexo','a.idSubsidios', 'a.estado', 'a.observaciones', 'a.documento', 'p.programa', 'r.requerimiento')
+                ->select('a.idAnexo','a.idSubsidios', 'pr.idPrograma', 'a.estado', 'a.observaciones', 'a.documento', 'p.programa', 'r.requerimiento')
                 ->innerJoin('App\Entity\ProgramaRequerimientos', 'pr','WITH', 'a.idProgReq = pr.idProgReq')
                 ->innerJoin('App\Entity\Programas', 'p','WITH', 'pr.idPrograma = p.idPrograma')
                 ->innerJoin('App\Entity\Requerimientos', 'r','WITH', 'r.idRequerimientos = pr.idRequerimientos')
