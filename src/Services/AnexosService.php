@@ -110,7 +110,19 @@ class AnexosService
             if (!$subsidio) {
                 return new JsonResponse(['success' => false, 'msj' => "El subsidio es incorrecto"]);
             } else {
-                $anexos = $em->getRepository(Anexos::class)->findByIdSubsidios($idSubsidio);
+
+                $query = $em->getRepository(Anexos::class)->createQueryBuilder('a')
+                ->select('a.idAnexo','a.idSubsidios', 'a.estado', 'a.observaciones', 'a.documento', 'p.programa', 'r.requerimiento')
+                ->innerJoin('App\Entity\ProgramaRequerimientos', 'pr','WITH', 'a.idProgReq = pr.idProgReq')
+                ->innerJoin('App\Entity\Programas', 'p','WITH', 'pr.idPrograma = p.idPrograma')
+                ->innerJoin('App\Entity\Requerimientos', 'r','WITH', 'r.idRequerimientos = pr.idRequerimientos')
+                ->where('a.idSubsidios = :id')
+                ->setParameter('id', $idSubsidio)
+                ->getQuery();
+                $anexos = $query->getResult();
+                
+                //$anexos = $em->getRepository(Anexos::class)->findByIdSubsidios($idSubsidio);
+                 
                 if (!$anexos) {
                     return new JsonResponse(['success' => false, 'msj' => "No hay anexos registrados a este subsidio"], Response::HTTP_BAD_GATEWAY);
                 } else {
@@ -122,5 +134,10 @@ class AnexosService
         } catch (Exception $error) {
             return new JsonResponse(['success' => false, 'msj' => "No se pudo devolver la lista de anexos\nerror: {$error->getMessage()}"], Response::HTTP_BAD_GATEWAY);
         }
+    }
+
+
+    public function anexosAprobadosPorSubsidio(){
+        echo "";
     }
 }
