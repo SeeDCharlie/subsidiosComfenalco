@@ -36,6 +36,24 @@ class NotiSoli
      */
     private $idSubsidios;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mensaje", type="string", length=45, nullable=false)
+     */
+    private $mensaje;
+
+    public function getMensaje(): ?string
+    {
+        return $this->mensaje;
+    }
+    
+    public function setMensaje(string $mensaje): self
+    {
+        $this->mensaje = $mensaje;
+        return $this;
+    }
+
     public function getIdNotiSoli(): ?int
     {
         return $this->idNotiSoli;
