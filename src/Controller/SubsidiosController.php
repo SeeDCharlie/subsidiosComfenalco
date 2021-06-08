@@ -49,6 +49,20 @@ class SubsidiosController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/actualizarSubsidioDos", name="actualizarSubsidioDos", methods = {"PUT"} )
+     */
+
+
+    public function actualizarSubsidioDos(Request $request,  SubsidiosServices $ss, EntityManagerInterface $em)
+    {
+        try {
+            $dats = json_decode($request->getContent(), true);
+            return $ss->actualizarSubsidioDos($dats, $em);
+        } catch (Exception $error) {
+            return new JsonResponse("No se pudo actualizar la solicitud de subsidio\nerror: ".$error->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
 
     /**
      * @Route("/consultarSubsidios", name="consultarSubsidios", methods = {"GET"})
