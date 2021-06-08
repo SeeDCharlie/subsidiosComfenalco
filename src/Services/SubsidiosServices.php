@@ -116,7 +116,7 @@ class SubsidiosServices
 
         try {
             
-            $sub = $entityManager->getRepository(Subsidios::class)->find($dats['idSubsidio']);
+            $sub = $entityManager->getRepository(Subsidios::class)->find($dats['idSubsidios']);
             $estado = $entityManager->getRepository(EstadosSubsidios::class)->find($dats['idEstado']);
             $usr = $entityManager->getRepository(Usuarios::class)->find($dats['idUsuario']);
             $programa = $entityManager->getRepository(Programas::class)->find($dats['idPrograma']);
