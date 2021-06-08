@@ -135,7 +135,7 @@ class SubsidiosServices
             }
 
             $sub->setIdEstado($dats['idEstado']);
-            $sub->setIdUsuario($dats['idUsr']);
+            $sub->setIdUsuario($dats['idUsuario']);
             $sub->setIdPrograma($dats['idPrograma']);
             $sub->setFechaModificacion(new DateTime(date("Y-m-d")));
             $sub->setFechaFinalizacion(new DateTime($dats['fechaFinalizacion']));
